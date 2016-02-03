@@ -1,0 +1,8 @@
+D:\Documents\Poliba\Magistrale\Compilatori\Progetto\SharpToJS\GrammarLib\GrammarLib\obj\Debug\GrammarLib.csprojResolveAssemblyReference.cache
+D:\Documents\Poliba\Magistrale\Compilatori\Progetto\SharpToJS\GrammarLib\GrammarLib\bin\Debug\GrammarLib.dll
+D:\Documents\Poliba\Magistrale\Compilatori\Progetto\SharpToJS\GrammarLib\GrammarLib\bin\Debug\GrammarLib.pdb
+D:\Documents\Poliba\Magistrale\Compilatori\Progetto\SharpToJS\GrammarLib\GrammarLib\bin\Debug\Irony.dll
+D:\Documents\Poliba\Magistrale\Compilatori\Progetto\SharpToJS\GrammarLib\GrammarLib\bin\Debug\Irony.Interpreter.dll
+D:\Documents\Poliba\Magistrale\Compilatori\Progetto\SharpToJS\GrammarLib\GrammarLib\bin\Debug\Irony.Interpreter.pdb
+D:\Documents\Poliba\Magistrale\Compilatori\Progetto\SharpToJS\GrammarLib\GrammarLib\obj\Debug\GrammarLib.dll
+D:\Documents\Poliba\Magistrale\Compilatori\Progetto\SharpToJS\GrammarLib\GrammarLib\obj\Debug\GrammarLib.pdb
