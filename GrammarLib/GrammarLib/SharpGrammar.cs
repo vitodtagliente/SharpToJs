@@ -110,8 +110,10 @@ namespace GrammarLib
             #region Keywords
 
             this.MarkReservedWords(
-                "",
-                ""
+                "return",
+                "int", "string", "float", "void", "double", "long",
+                "if", "do", "while", "for", "switch", "case", "break", 
+                "using", "this"
                 );
 
             #endregion
@@ -305,6 +307,27 @@ namespace GrammarLib
             value_element.Rule = element
                 | "null"
                 ;
+
+            #region AST
+
+            // Definizione dei simboli di punteggiatura da eliminare nella costruzione dell'AST
+
+            this.MarkPunctuation(
+                "(",")",
+                ",", ";",
+                "{", "}",
+                "[", "]",
+                "."
+                );
+
+            // Registra le regole di precedenza degli operatori
+
+            this.RegisterOperators(50, "*", "/");
+            this.RegisterOperators(40, "+", "-");
+            this.RegisterOperators(30, "=", "<=", ">=", "<", ">", "<>");
+            this.RegisterOperators(20, "&&", "||");
+
+            #endregion
 
         }
     }
