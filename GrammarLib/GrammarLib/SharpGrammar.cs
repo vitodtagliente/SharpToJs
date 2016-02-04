@@ -90,23 +90,43 @@ namespace GrammarLib
             NonTerminal statements = new NonTerminal("statements");
             NonTerminal statement = new NonTerminal("statement");
 
+            NonTerminal embedded_statement = new NonTerminal("embedded-statement");
             NonTerminal declaration_statement = new NonTerminal("declaration-statement");
+            NonTerminal if_statement = new NonTerminal("if-statement");
+            NonTerminal else_statement = new NonTerminal("else-statement");
+            NonTerminal do_statement = new NonTerminal("do-statement");
+            NonTerminal switch_statement = new NonTerminal("switch-statement");
+            NonTerminal switch_body = new NonTerminal("switch-body");
+            NonTerminal switch_sections = new NonTerminal("switch-section");
+            NonTerminal switch_section = new NonTerminal("switch-section");
+            NonTerminal foreach_statement = new NonTerminal("foreach-statement");
+            NonTerminal for_statement = new NonTerminal("for-statement");
+            NonTerminal for_initializer = new NonTerminal("for-initializer");
+            NonTerminal for_condition = new NonTerminal("for-condition");
+            NonTerminal for_iterator = new NonTerminal("for-iterator");
+            NonTerminal while_statement = new NonTerminal("while-statement");
+            NonTerminal expression_statement = new NonTerminal("expression-statement");
+
             NonTerminal variable_declarations = new NonTerminal("variable-declarations");
             NonTerminal variable_declaration = new NonTerminal("variable-declaration");
 
             NonTerminal assign_statement = new NonTerminal("assign-statement");
-            NonTerminal relational_statement = new NonTerminal("relational-statement");
+
+            NonTerminal relational_expression = new NonTerminal("relational-expression");
+            NonTerminal math_expression = new NonTerminal("math-expression");
 
             NonTerminal expressions = new NonTerminal("expressions");
             NonTerminal expression = new NonTerminal("expression");
 
+            NonTerminal object_creation_expression = new NonTerminal("object-creation-expression");
+
             NonTerminal unary_operator = new NonTerminal("unary-operator");
             NonTerminal assignment_operator = new NonTerminal("assignment-operator");
             NonTerminal binary_operator = new NonTerminal("binary-operator");
+            NonTerminal inc_or_dec_operator = new NonTerminal("inc-or-dec-operator");
 
             NonTerminal boolean_token = new NonTerminal("boolean-token");
             NonTerminal object_token = new NonTerminal("object-token");
-            NonTerminal function_token = new NonTerminal("function-token");
 
             NonTerminal element = new NonTerminal("element");
 
@@ -278,8 +298,64 @@ namespace GrammarLib
             statements.Rule = MakePlusRule(statements, null, statement);
 
             statement.Rule = declaration_statement
-                | assign_statement // confict 
-                //| relational_statement
+                | embedded_statement                
+                ;
+
+            embedded_statement.Rule = block
+                | if_statement
+                | switch_statement
+                | for_statement
+                | foreach_statement
+                | do_statement
+                | while_statement
+                ;
+
+            // If Statement
+
+            if_statement.Rule = ToTerm("if") + "(" + expression + ")" + embedded_statement + else_statement;
+
+            else_statement.Rule = Empty
+                | PreferShiftHere() + "else" + embedded_statement
+                ;
+
+            // For Statement
+
+            for_statement.Rule = ToTerm("for") + "(" + for_initializer + ";" + for_condition + ";" + for_iterator + ")" + embedded_statement;
+
+            for_initializer.Rule = Empty
+                | assign_statement
+                | variable_declaration
+                ;
+
+            for_condition.Rule = Empty
+                | expression
+                ;
+
+            for_iterator.Rule = Empty
+                | inc_or_dec_operator + qualified_identifier
+                | qualified_identifier + inc_or_dec_operator
+                ;
+
+            // Foreach Statement
+
+            foreach_statement.Rule = ToTerm("foreach") + "(" + type_declaration + identifierToken + "in" + qualified_identifier + ")" + embedded_statement;
+
+            // Do Statement
+
+            do_statement.Rule = ToTerm("do") + embedded_statement + "while" + "(" + expression + ")" + ";";
+
+            // While Statement
+
+            while_statement.Rule = ToTerm("while") + "(" + expression + ")" + embedded_statement;
+
+            // Switch Statement
+
+            switch_statement.Rule = ToTerm("switch") + "(" + expression + ")" + "{" + switch_body + "}";
+
+            switch_body.Rule = MakeStarRule(switch_sections, null, switch_section);
+
+            switch_section.Rule = ToTerm("case") + expression + ":" + expression + "break" + ";"
+                | ToTerm("default") + ":" + expression + "break" + ";"
                 ;
 
             // Dichiarazione di variabili
@@ -293,9 +369,19 @@ namespace GrammarLib
                 | identifierToken + "=" + expressions
                 ;
 
+            // Espressione creazione oggetti
+
+            //object_creation_expression.Rule = 
+
+            // Espressione matematica
+
+            math_expression.Rule = element + binary_operator + expressions;
+
+            relational_expression.Rule = element + binary_operator + expressions;
+
             // Assegnazione
 
-            assign_statement.Rule = qualified_identifier + "=" + expressions + ";";
+            assign_statement.Rule = qualified_identifier + assignment_operator + expressions + ";";
 
             // Operatori
 
@@ -307,12 +393,15 @@ namespace GrammarLib
                   | "=" | "+=" | "-=" | "*="
                   | "is" | "as" | "??"
                   ;
+            inc_or_dec_operator.Rule = ToTerm("++") | "--";
 
             // Espressione
 
             expressions.Rule = MakeStarRule(expressions, null, expression);
 
-            expression.Rule = element;
+            expression.Rule = element
+                //| math_expression // conflict
+                ;
 
             // Elementi
 
@@ -320,10 +409,10 @@ namespace GrammarLib
                 | "false"
                 ;
 
-            object_token.Rule = MakePlusRule(object_token, ToTerm("."), identifierToken);
-
-            function_token.Rule = identifierToken + function_arguments;
-
+            object_token.Rule = qualified_identifier
+                //| qualified_identifier + function_arguments // confict
+                ;
+            
             function_arguments.Rule = ToTerm("(") + ")"
                 | "(" + arguments + ")"
                 ;
@@ -333,11 +422,10 @@ namespace GrammarLib
 
             argument.Rule = element;
 
-            element.Rule = qualified_identifier
+            element.Rule = object_token
                 | stringToken
                 | numberToken
                 | boolean_token
-                //| function_token // conflict
                 | "null"
                 | "(" + expression + ")"
                 ;
