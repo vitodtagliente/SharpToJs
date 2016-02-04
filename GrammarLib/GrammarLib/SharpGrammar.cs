@@ -61,6 +61,8 @@ namespace GrammarLib
             NonTerminal enum_elements = new NonTerminal("enum-elements");
             NonTerminal enum_element = new NonTerminal("enum-element");
 
+            NonTerminal struct_elements = new NonTerminal("struct-elements");
+
             NonTerminal member_declarations = new NonTerminal("member-declarations");
             NonTerminal member_declaration = new NonTerminal("member-declaration");
 
@@ -79,8 +81,11 @@ namespace GrammarLib
             NonTerminal method_body = new NonTerminal("method-body");
             NonTerminal block = new NonTerminal("block");
 
+            NonTerminal property_body = new NonTerminal("property-body");
+
             NonTerminal builtin_type = new NonTerminal("builtin-type");
             NonTerminal builtin_type_or_void = new NonTerminal("builtin-type-or-void");
+            NonTerminal qualified_type = new NonTerminal("qualified-type");
 
             NonTerminal statements = new NonTerminal("statements");
             NonTerminal statement = new NonTerminal("statement");
@@ -157,7 +162,7 @@ namespace GrammarLib
                 ;
 
             type_declaration.Rule = class_declaration 
-                //| struct_declaration 
+                | struct_declaration 
                 | enum_declaration
                 ;
 
@@ -188,12 +193,18 @@ namespace GrammarLib
             member_declaration.Rule = constant_declaration
                 | field_declaration
                 | method_declaration
-                //| property_declaration
+                | property_declaration
                 ;
 
             member_declaration.ErrorRule = SyntaxError + ";"
                 | SyntaxError + "}"
                 ;
+
+            // Dichiarazione struct
+
+            struct_declaration.Rule = visibility_modifiers + "struct" + identifierToken + "{" + struct_elements + "}" + semi_colon;
+
+            struct_elements.Rule = MakeStarRule(struct_elements, null, field_declaration);
 
             // Dichiarazione enumeratori
 
@@ -203,16 +214,23 @@ namespace GrammarLib
 
             enum_element.Rule = identifierToken;
 
-            // Dichiarazione costanti
+            // Dichiarazione tipi
 
             builtin_type.Rule = ToTerm("int")
                 | "bool" | "decimal" | "float" | "double" | "string" | "object"
-                | "byte" | "short" | "ushort" | "uint" | "long" | "ulong" | "char" | "sbyte"                
+                | "byte" | "short" | "ushort" | "uint" | "long" | "ulong" | "char" | "sbyte"
                 ;
 
             builtin_type_or_void.Rule = builtin_type
                 | "void"
                 ;
+
+            qualified_type.Rule = builtin_type_or_void
+                | qualified_identifier
+                | "var"
+                ;
+
+            // Dichiarazione costanti
 
             constant_declaration.Rule = visibility_modifiers + "const" + builtin_type + constant_declarators + ";"
                 ;
@@ -225,13 +243,13 @@ namespace GrammarLib
 
             // Dichiarazione Attribbuti
 
-            field_declaration.Rule = visibility_modifiers + builtin_type + identifierToken + ";"
-                | visibility_modifiers + builtin_type + identifierToken + "=" + expressions + ";"
+            field_declaration.Rule = visibility_modifiers + qualified_type + identifierToken + ";"
+                | visibility_modifiers + qualified_type + identifierToken + "=" + expressions + ";"
                 ;
 
             // Dichiarazione Metodi
             
-            method_declaration.Rule = visibility_modifiers + builtin_type + identifierToken + method_parameters + method_body;
+            method_declaration.Rule = visibility_modifiers + qualified_type + identifierToken + method_parameters + method_body;
 
             method_parameters.Rule = ToTerm("(") + ")"
                 | "(" + parameters + ")"
@@ -239,29 +257,34 @@ namespace GrammarLib
 
             parameters.Rule = MakePlusRule(parameters, ToTerm(","), parameter);
 
-            parameter.Rule = builtin_type + identifierToken;
+            parameter.Rule = qualified_type + identifierToken;
 
             method_body.Rule = block
                 | semi_colon
                 ;
 
             block.Rule = ToTerm("{") + "}"
-                //| "{" + statements + "}" // conflicts
+                | "{" + statements + "}"
                 ;
+
+            // Dichiarazione Proprietà
+
+            property_declaration.Rule = visibility_modifiers + qualified_type + identifierToken + property_body;
+
+            property_body.Rule = "{" + "}";
 
             // Statements
 
-            statements.Rule = MakeStarRule(statements, null, statement);
+            statements.Rule = MakePlusRule(statements, null, statement);
 
             statement.Rule = declaration_statement
-                | assign_statement
+                | assign_statement // confict 
                 //| relational_statement
-                | block
                 ;
 
             // Dichiarazione di variabili
 
-            declaration_statement.Rule = visibility_modifiers + builtin_type + variable_declarations + ";"
+            declaration_statement.Rule = qualified_type + variable_declarations + ";"
                 ;
 
             variable_declarations.Rule = MakePlusRule(variable_declarations, ToTerm(","), variable_declaration);
@@ -272,7 +295,7 @@ namespace GrammarLib
 
             // Assegnazione
 
-            assign_statement.Rule = identifierToken + "=" + expressions + ";";
+            assign_statement.Rule = qualified_identifier + "=" + expressions + ";";
 
             // Operatori
 
@@ -310,10 +333,10 @@ namespace GrammarLib
 
             argument.Rule = element;
 
-            element.Rule = identifierToken
+            element.Rule = qualified_identifier
                 | stringToken
                 | numberToken
-                //| object_token
+                | boolean_token
                 //| function_token // conflict
                 | "null"
                 | "(" + expression + ")"
