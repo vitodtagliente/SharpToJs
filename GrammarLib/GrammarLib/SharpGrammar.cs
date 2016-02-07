@@ -71,6 +71,7 @@ namespace GrammarLib
             NonTerminal constant_declarator = new NonTerminal("constant-declarator");
 
             NonTerminal field_declaration = new NonTerminal("field-declaration");
+            NonTerminal constructor_declaration = new NonTerminal("constructor-declaration");
             NonTerminal method_declaration = new NonTerminal("method-declaration");
             NonTerminal property_declaration = new NonTerminal("property-declaration");
 
@@ -82,6 +83,9 @@ namespace GrammarLib
             NonTerminal block = new NonTerminal("block");
 
             NonTerminal property_body = new NonTerminal("property-body");
+            NonTerminal property_labels = new NonTerminal("property-labels");
+            NonTerminal property_set = new NonTerminal("property-set");
+            NonTerminal property_get = new NonTerminal("property-get");
 
             NonTerminal builtin_type = new NonTerminal("builtin-type");
             NonTerminal builtin_type_or_void = new NonTerminal("builtin-type-or-void");
@@ -91,6 +95,7 @@ namespace GrammarLib
             NonTerminal statement = new NonTerminal("statement");
 
             NonTerminal embedded_statement = new NonTerminal("embedded-statement");
+            NonTerminal control_flow_statement = new NonTerminal("control-flow-statement");
             NonTerminal declaration_statement = new NonTerminal("declaration-statement");
             NonTerminal if_statement = new NonTerminal("if-statement");
             NonTerminal else_statement = new NonTerminal("else-statement");
@@ -106,29 +111,38 @@ namespace GrammarLib
             NonTerminal for_iterator = new NonTerminal("for-iterator");
             NonTerminal while_statement = new NonTerminal("while-statement");
             NonTerminal expression_statement = new NonTerminal("expression-statement");
+            NonTerminal return_statement = new NonTerminal("return-statement");
 
             NonTerminal variable_declarations = new NonTerminal("variable-declarations");
             NonTerminal variable_declaration = new NonTerminal("variable-declaration");
 
             NonTerminal assign_statement = new NonTerminal("assign-statement");
-
-            NonTerminal relational_expression = new NonTerminal("relational-expression");
-            NonTerminal math_expression = new NonTerminal("math-expression");
-
+            
             NonTerminal expressions = new NonTerminal("expressions");
             NonTerminal expression = new NonTerminal("expression");
 
+            NonTerminal conditional_expression = new NonTerminal("conditional-expression");
+            NonTerminal bin_op_expression = new NonTerminal("bin-op-expression");
+            NonTerminal typecast_expression = new NonTerminal("typecast-expression");
+            NonTerminal primary_expression = new NonTerminal("primary-expression");
+
             NonTerminal object_creation_expression = new NonTerminal("object-creation-expression");
+            NonTerminal pre_incr_decr_expression = new NonTerminal("pre-incr-decr-expression");
+            NonTerminal post_incr_decr_expression = new NonTerminal("post-incr-decr-expression");
+            NonTerminal typeof_expression = new NonTerminal("typeof-expression");
+            NonTerminal unary_expression = new NonTerminal("unary-expression");
+            NonTerminal member_expression = new NonTerminal("member-expression");
 
             NonTerminal unary_operator = new NonTerminal("unary-operator");
             NonTerminal assignment_operator = new NonTerminal("assignment-operator");
             NonTerminal binary_operator = new NonTerminal("binary-operator");
-            NonTerminal inc_or_dec_operator = new NonTerminal("inc-or-dec-operator");
+            NonTerminal incr_dec_operator = new NonTerminal("incr-dec-operator");
 
             NonTerminal boolean_token = new NonTerminal("boolean-token");
             NonTerminal object_token = new NonTerminal("object-token");
 
             NonTerminal element = new NonTerminal("element");
+            NonTerminal builtin_element = new NonTerminal("builtin-element");
 
             NonTerminal function_arguments = new NonTerminal("function-arguments");
             NonTerminal arguments = new NonTerminal("arguments");
@@ -142,7 +156,8 @@ namespace GrammarLib
                 "return",
                 "int", "string", "float", "void", "double", "long",
                 "if", "do", "while", "for", "switch", "case", "break", 
-                "using", "this"
+                "using"
+                //, "this", "base"
                 );
 
             #endregion
@@ -197,6 +212,8 @@ namespace GrammarLib
                 | "public"
                 | "private"
                 | "protected"
+                | "virtual"
+                | "abstract"
                 ;
 
             class_params.Rule = ToTerm(":") + class_param
@@ -212,6 +229,7 @@ namespace GrammarLib
 
             member_declaration.Rule = constant_declaration
                 | field_declaration
+                | constructor_declaration
                 | method_declaration
                 | property_declaration
                 ;
@@ -258,14 +276,18 @@ namespace GrammarLib
             constant_declarators.Rule = MakePlusRule(constant_declarators, ToTerm(","), constant_declarator);
 
             constant_declarator.Rule = identifierToken
-                | identifierToken + "=" + expressions
+                | identifierToken + "=" + builtin_element 
                 ;
 
             // Dichiarazione Attribbuti
 
             field_declaration.Rule = visibility_modifiers + qualified_type + identifierToken + ";"
-                | visibility_modifiers + qualified_type + identifierToken + "=" + expressions + ";"
+                | visibility_modifiers + qualified_type + identifierToken + "=" + primary_expression + ";" // ? primary_expression ? 
                 ;
+
+            // Dichiarazione Costruttore
+
+            constructor_declaration.Rule = visibility_modifiers + qualified_identifier + method_parameters + method_body;
 
             // Dichiarazione Metodi
             
@@ -291,23 +313,54 @@ namespace GrammarLib
 
             property_declaration.Rule = visibility_modifiers + qualified_type + identifierToken + property_body;
 
-            property_body.Rule = "{" + "}";
+            property_body.Rule = ToTerm("{") + "}"
+                | ToTerm("{") + property_labels + "}" // ? conflict ?
+                ;
+
+            property_labels.Rule = PreferShiftHere() + property_get + property_set
+                | property_set + property_get
+                ;
+
+            property_get.Rule = Empty
+                | visibility_modifiers + ToTerm("get") + method_body
+                ;
+
+            property_set.Rule = Empty
+                | visibility_modifiers + ToTerm("set") + method_body
+                ;
 
             // Statements
 
             statements.Rule = MakePlusRule(statements, null, statement);
 
             statement.Rule = declaration_statement
-                | embedded_statement                
+                | embedded_statement + semi_colon
                 ;
 
-            embedded_statement.Rule = block
-                | if_statement
+            control_flow_statement.Rule = if_statement
                 | switch_statement
                 | for_statement
                 | foreach_statement
                 | do_statement
                 | while_statement
+                ;
+
+            embedded_statement.Rule = block
+                | control_flow_statement
+                | assign_statement
+                | post_incr_decr_expression
+                | pre_incr_decr_expression
+                | object_creation_expression
+                | member_expression 
+                | return_statement
+                ;
+
+            // Return statement
+
+            return_statement.Rule = ToTerm("return")
+                | PreferShiftHere() + "return" + expression
+                | "break"
+                | "continue"
                 ;
 
             // If Statement
@@ -332,8 +385,8 @@ namespace GrammarLib
                 ;
 
             for_iterator.Rule = Empty
-                | inc_or_dec_operator + qualified_identifier
-                | qualified_identifier + inc_or_dec_operator
+                | pre_incr_decr_expression
+                | post_incr_decr_expression
                 ;
 
             // Foreach Statement
@@ -366,41 +419,64 @@ namespace GrammarLib
             variable_declarations.Rule = MakePlusRule(variable_declarations, ToTerm(","), variable_declaration);
 
             variable_declaration.Rule = identifierToken
-                | identifierToken + "=" + expressions
+                | identifierToken + "=" + expressions // ? expressions
                 ;
-
-            // Espressione creazione oggetti
-
-            //object_creation_expression.Rule = 
-
-            // Espressione matematica
-
-            math_expression.Rule = element + binary_operator + expressions;
-
-            relational_expression.Rule = element + binary_operator + expressions;
-
+            
             // Assegnazione
 
-            assign_statement.Rule = qualified_identifier + assignment_operator + expressions + ";";
+            assign_statement.Rule = object_token + assignment_operator + expressions + ";"
+                ; // ? expressions ?
 
             // Operatori
 
-            unary_operator.Rule = ToTerm("+") | "-" | "!" | "~" | "*";
-            assignment_operator.Rule = ToTerm("=") | "+=" | "-=" | "*=";
+            unary_operator.Rule = ToTerm("!");
+            assignment_operator.Rule = ToTerm("=")
+                | "+=" 
+                | "-=" 
+                | "*="
+                ;
+
             binary_operator.Rule = ToTerm("<")
-                  | "||" | "&&" | "|" | "^" | "&" 
-                  | "==" | "!=" | ">" | "<=" | ">=" | "<<" | ">>" | "+" | "-" | "*" | "/"
-                  | "=" | "+=" | "-=" | "*="
-                  | "is" | "as" | "??"
-                  ;
-            inc_or_dec_operator.Rule = ToTerm("++") | "--";
+                | "||" | "&&" | "|" | "^" 
+                | "==" | "!=" | ">" | "<=" | ">=" | "+" | "-" | "*" | "/"
+                ;
+
+            incr_dec_operator.Rule = ToTerm("++") | "--";
 
             // Espressione
 
             expressions.Rule = MakeStarRule(expressions, null, expression);
 
-            expression.Rule = element
-                //| math_expression // conflict
+            expression.Rule = primary_expression
+                | conditional_expression
+                | typecast_expression
+                | bin_op_expression
+                ;
+
+            primary_expression.Rule = element
+                | unary_expression
+                | object_creation_expression
+                | typeof_expression
+                ;
+
+            bin_op_expression.Rule = expression + binary_operator + expression;
+
+            typecast_expression.Rule = ToTerm("(") + qualified_type + ")" + primary_expression;
+
+            conditional_expression.Rule = expression + PreferShiftHere() + "?" + expression + ":" + expression;
+
+            unary_expression.Rule = unary_operator + unary_expression;
+
+            pre_incr_decr_expression.Rule = incr_dec_operator + element;
+
+            post_incr_decr_expression.Rule = element + incr_dec_operator;
+
+            typeof_expression.Rule = ToTerm("typeof") + "(" + primary_expression + ")";
+
+            object_creation_expression.Rule = ToTerm("new") + qualified_identifier + function_arguments
+                ;
+
+            member_expression.Rule = MakePlusRule(member_expression, ToTerm("."), object_token);
                 ;
 
             // Elementi
@@ -409,25 +485,28 @@ namespace GrammarLib
                 | "false"
                 ;
 
-            object_token.Rule = qualified_identifier
-                //| qualified_identifier + function_arguments // confict
+            object_token.Rule = qualified_identifier + function_arguments
                 ;
             
-            function_arguments.Rule = ToTerm("(") + ")"
+            function_arguments.Rule = Empty
                 | "(" + arguments + ")"
                 ;
 
-            arguments.Rule = MakePlusRule(arguments, ToTerm(","), argument)
+            arguments.Rule = MakeStarRule(arguments, ToTerm(","), argument)
                 ;
 
             argument.Rule = element;
 
             element.Rule = object_token
-                | stringToken
-                | numberToken
-                | boolean_token
+                | PreferShiftHere() + member_expression
+                | builtin_element
                 | "null"
                 | "(" + expression + ")"
+                ;
+
+            builtin_element.Rule = numberToken
+                | boolean_token
+                | stringToken
                 ;
 
             #region AST
