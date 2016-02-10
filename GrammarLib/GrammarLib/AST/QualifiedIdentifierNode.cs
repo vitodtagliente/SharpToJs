@@ -18,7 +18,7 @@ namespace GrammarLib.AST
 
         public override string ToJS()
         {
-            return Value;
+            return string.Empty;
         }
     }
 }

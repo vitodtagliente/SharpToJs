@@ -19,6 +19,7 @@ namespace GrammarLib
             Terminal numberToken = new NumberLiteral("number-token");
             Terminal stringToken = new StringLiteral("string-token", "\"", StringOptions.None);
             Terminal identifierToken = new IdentifierTerminal("identifier-token");
+            identifierToken.AstConfig.NodeType = typeof(AST.IdentifierToken);
                                     
             #endregion
 
@@ -33,23 +34,23 @@ namespace GrammarLib
             
             NonTerminal namespace_declarations = new NonTerminal("namespace-declarations", typeof(AST.JsNode));
             NonTerminal namespace_declaration = new NonTerminal("namespace-declaration", typeof(AST.NamespaceNode));
-            NonTerminal namespace_body = new NonTerminal("namespace-body");
+            NonTerminal namespace_body = new NonTerminal("namespace-body", typeof(AST.JsNode));
 
-            NonTerminal namespace_member_declarations = new NonTerminal("namespace-member-declarations");
-            NonTerminal namespace_member_declaration = new NonTerminal("namespace-member-declaration");
+            NonTerminal namespace_member_declarations = new NonTerminal("namespace-member-declarations", typeof(AST.JsNode));
+            NonTerminal namespace_member_declaration = new NonTerminal("namespace-member-declaration", typeof(AST.JsNode));
 
             NonTerminal qualified_identifier = new NonTerminal("qualified-identifier", typeof(AST.QualifiedIdentifierNode));
 
             NonTerminal semi_colon = new NonTerminal("semi-colon");
 
-            NonTerminal type_declaration = new NonTerminal("type-declaration");
+            NonTerminal type_declaration = new NonTerminal("type-declaration", typeof(AST.JsNode));
 
-            NonTerminal class_declaration = new NonTerminal("class-declaration");
+            NonTerminal class_declaration = new NonTerminal("class-declaration", typeof(AST.ClassNode));
             NonTerminal struct_declaration = new NonTerminal("struct-declaration");
             NonTerminal interface_declaration = new NonTerminal("interface-declaration");
             NonTerminal enum_declaration = new NonTerminal("enum-declaration");
 
-            NonTerminal class_body = new NonTerminal("class-body");
+            NonTerminal class_body = new NonTerminal("class-body", typeof(AST.JsNode));
 
             NonTerminal visibility_modifiers = new NonTerminal("visibility-modifiers");
             NonTerminal visibility_modifier = new NonTerminal("visibility-modifier");
@@ -62,15 +63,15 @@ namespace GrammarLib
 
             NonTerminal struct_elements = new NonTerminal("struct-elements");
 
-            NonTerminal member_declarations = new NonTerminal("member-declarations");
-            NonTerminal member_declaration = new NonTerminal("member-declaration");
+            NonTerminal member_declarations = new NonTerminal("member-declarations", typeof(AST.JsNode));
+            NonTerminal member_declaration = new NonTerminal("member-declaration", typeof(AST.JsNode));
 
             NonTerminal constant_declaration = new NonTerminal("constant-declaration");
             NonTerminal constant_declarators = new NonTerminal("constant-declarators");
             NonTerminal constant_declarator = new NonTerminal("constant-declarator");
 
             NonTerminal field_declaration = new NonTerminal("field-declaration");
-            NonTerminal constructor_declaration = new NonTerminal("constructor-declaration");
+            NonTerminal constructor_declaration = new NonTerminal("constructor-declaration", typeof(AST.ConstructorNode));
             NonTerminal method_declaration = new NonTerminal("method-declaration");
             NonTerminal property_declaration = new NonTerminal("property-declaration");
 
@@ -530,6 +531,9 @@ namespace GrammarLib
             this.RegisterOperators(20, "&&", "||");
 
             MarkTransient(unary_operator, binary_operator, incr_dec_operator, assignment_operator);
+
+            MarkTransient(using_directives_lines);
+            MarkTransient(namespace_declarations);
 
             //this.LanguageFlags = LanguageFlags.CreateAst | LanguageFlags.NewLineBeforeEOF;
 

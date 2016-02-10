@@ -16,7 +16,7 @@ namespace GrammarLib
             private set { strErrors.AppendLine(value); }
         }
 
-        public AST.JsNode ast { get; private set; }
+        public AST.JsNode AbstractSyntaxTree { get; private set; }
 
         public JavascriptGenerator(Grammar grammar)
         {
@@ -36,9 +36,9 @@ namespace GrammarLib
             }
 
             // create AST
-
-            ast = (AST.JsNode)AST.NodeFactory.Find(parse_tree.Root);
-            if (ast == null)
+            
+            AbstractSyntaxTree = (AST.JsNode)AST.NodeFactory.Map(parse_tree.Root);
+            if (AbstractSyntaxTree == null)
             {
                 Errors = "Cannot parse AST";
                 return false;
@@ -49,8 +49,8 @@ namespace GrammarLib
 
         public string Compile()
         {
-            if (ast != null)
-                return ast.ToJS();
+            if (AbstractSyntaxTree != null)
+                return AbstractSyntaxTree.ToJS();
             return string.Empty;
         }
     }

@@ -8,14 +8,17 @@ namespace GrammarLib.AST
         public string Identifier { get; private set; }
 
         public override void AfterInit()
-        {
+        {            
             foreach(var child in Children)
             {
                 if (child.GetType() == typeof(QualifiedIdentifierNode))
                 {
-                    Identifier = ((QualifiedIdentifierNode)child).ToJS();
+                    Identifier = ((QualifiedIdentifierNode)child).Value;
+
+                    Table.Push(new Symbol(Identifier, "namespace"));
+
                     Children.Remove(child);
-                    return;
+                    break;
                 }
             }
         }
@@ -25,9 +28,14 @@ namespace GrammarLib.AST
             StringBuilder str = new StringBuilder();
             str.Append("var ");
             str.Append(Identifier);
-            str.Append(" = {};");
+            str.Append(" = ");
+            str.Append(Identifier);
+            str.Append(" || {};");
             str.AppendLine(string.Empty);
             str.AppendLine(base.ToJS());
+
+            Table.Pop();
+
             return str.ToString();
         }
     }

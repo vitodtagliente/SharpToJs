@@ -5,7 +5,7 @@ namespace GrammarLib.AST
 {
     public class NodeFactory
     {
-        public static object Find(ParseTreeNode node)
+        public static object Map(ParseTreeNode node)
         {
             if (node == null) return null;
 
