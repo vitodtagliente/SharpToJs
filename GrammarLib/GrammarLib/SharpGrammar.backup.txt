@@ -24,21 +24,21 @@ namespace GrammarLib
 
             #region NonTerminals
 
-            NonTerminal program = new NonTerminal("program", typeof(AST.ProgramNode));
+            NonTerminal program = new NonTerminal("program");
 
 
             NonTerminal using_directives_lines = new NonTerminal("using-directives-lines");
             NonTerminal using_directives = new NonTerminal("using-directives");
             NonTerminal using_directive = new NonTerminal("using-directive");
             
-            NonTerminal namespace_declarations = new NonTerminal("namespace-declarations", typeof(AST.JsNode));
-            NonTerminal namespace_declaration = new NonTerminal("namespace-declaration", typeof(AST.NamespaceNode));
+            NonTerminal namespace_declarations = new NonTerminal("namespace-declarations");
+            NonTerminal namespace_declaration = new NonTerminal("namespace-declaration");
             NonTerminal namespace_body = new NonTerminal("namespace-body");
 
             NonTerminal namespace_member_declarations = new NonTerminal("namespace-member-declarations");
             NonTerminal namespace_member_declaration = new NonTerminal("namespace-member-declaration");
 
-            NonTerminal qualified_identifier = new NonTerminal("qualified-identifier", typeof(AST.QualifiedIdentifierNode));
+            NonTerminal qualified_identifier = new NonTerminal("qualified-identifier");
 
             NonTerminal semi_colon = new NonTerminal("semi-colon");
 
@@ -132,10 +132,10 @@ namespace GrammarLib
             NonTerminal unary_expression = new NonTerminal("unary-expression");
             NonTerminal member_expression = new NonTerminal("member-expression");
 
-            NonTerminal unary_operator = new NonTerminal("unary-operator", "operator");
-            NonTerminal assignment_operator = new NonTerminal("assignment-operator", "assignment operator");
-            NonTerminal binary_operator = new NonTerminal("binary-operator", "operator");
-            NonTerminal incr_dec_operator = new NonTerminal("incr-dec-operator", "operator");
+            NonTerminal unary_operator = new NonTerminal("unary-operator");
+            NonTerminal assignment_operator = new NonTerminal("assignment-operator");
+            NonTerminal binary_operator = new NonTerminal("binary-operator");
+            NonTerminal incr_dec_operator = new NonTerminal("incr-dec-operator");
 
             NonTerminal boolean_token = new NonTerminal("boolean-token");
             NonTerminal object_token = new NonTerminal("object-token");
@@ -207,8 +207,8 @@ namespace GrammarLib
 
             visibility_modifiers.Rule = MakeStarRule(visibility_modifiers, null, visibility_modifier);
 
-            visibility_modifier.Rule = PreferShiftHere() + ToTerm("public")
-                | "static"
+            visibility_modifier.Rule = ToTerm("static")
+                | "public"
                 | "private"
                 | "protected"
                 | "virtual"
@@ -316,7 +316,7 @@ namespace GrammarLib
                 | ToTerm("{") + property_labels + "}" // ? conflict ?
                 ;
 
-            property_labels.Rule = ReduceHere() + property_get + property_set
+            property_labels.Rule = PreferShiftHere() + property_get + property_set
                 | property_set + property_get
                 ;
 
@@ -429,18 +429,18 @@ namespace GrammarLib
             // Operatori
 
             unary_operator.Rule = ToTerm("!");
-            assignment_operator.Rule = ReduceHere() + ToTerm("=")
+            assignment_operator.Rule = ToTerm("=")
                 | "+=" 
                 | "-=" 
                 | "*="
                 ;
 
-            binary_operator.Rule = PreferShiftHere() + ToTerm("+")
+            binary_operator.Rule = ToTerm("<")
                 | "||" | "&&" | "|" | "^" 
-                | "==" | "!=" | ">" | "<=" | ">=" | "<" | "-" | "*" | "/"
+                | "==" | "!=" | ">" | "<=" | ">=" | "+" | "-" | "*" | "/"
                 ;
 
-            incr_dec_operator.Rule = ReduceHere() + ToTerm("++") | "--";
+            incr_dec_operator.Rule = ToTerm("++") | "--";
 
             // Espressione
 
@@ -510,9 +510,8 @@ namespace GrammarLib
 
             #region AST
 
-            // Definizione dei simboli di punteggiatura da eliminare nella costruzione del Parse Tree
+            // Definizione dei simboli di punteggiatura da eliminare nella costruzione dell'AST
 
-            /*
             this.MarkPunctuation(
                 "(",")",
                 ",", ";",
@@ -520,7 +519,6 @@ namespace GrammarLib
                 "[", "]",
                 "."
                 );
-            */
 
             // Registra le regole di precedenza degli operatori
 
@@ -528,8 +526,6 @@ namespace GrammarLib
             this.RegisterOperators(40, "+", "-");
             this.RegisterOperators(30, "=", "<=", ">=", "<", ">", "<>");
             this.RegisterOperators(20, "&&", "||");
-
-            MarkTransient(unary_operator, binary_operator, incr_dec_operator, assignment_operator);
 
             //this.LanguageFlags = LanguageFlags.CreateAst | LanguageFlags.NewLineBeforeEOF;
 

@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrammarLib", "GrammarLib\GrammarLib.csproj", "{BD316D7E-8D16-4163-921F-BBF7BA9BB3A3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compiler", "..\Compiler\Compiler.csproj", "{4C557597-DD73-4754-A2C1-AAF0379EF498}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{BD316D7E-8D16-4163-921F-BBF7BA9BB3A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD316D7E-8D16-4163-921F-BBF7BA9BB3A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD316D7E-8D16-4163-921F-BBF7BA9BB3A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C557597-DD73-4754-A2C1-AAF0379EF498}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C557597-DD73-4754-A2C1-AAF0379EF498}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C557597-DD73-4754-A2C1-AAF0379EF498}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C557597-DD73-4754-A2C1-AAF0379EF498}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
