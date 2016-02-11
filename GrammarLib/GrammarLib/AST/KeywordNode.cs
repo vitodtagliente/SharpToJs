@@ -1,13 +1,17 @@
 ﻿
 namespace SharpToJs.AST
 {
-    public class IdentifierToken : JsNode
+    public class KeywordNode : JsNode
     {
         public string Value { get; private set; }
 
         public override void SetBehaviour()
         {
-            Value = Context.Token.Value.ToString();
+            Value = string.Empty;
+            if(Context.ChildNodes.Count > 0)
+            {
+                Value = Context.ChildNodes[0].Token.Text;
+            }
         }
 
         public override string ToJs()

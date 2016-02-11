@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace GrammarLib.AST
+namespace SharpToJs.AST
 {
     public class ClassNode : JsNode
     {
@@ -36,9 +36,16 @@ namespace GrammarLib.AST
 
             str.Append(base.ToJs());
 
+            // inserisco le operazioni del costruttore
+            str.AppendLine(string.Empty);
+            str.AppendLine("// Constructor");
+            str.AppendLine(string.Empty);
+
             str.AppendLine(string.Empty);
             str.AppendLine("}");
             str.AppendLine(string.Empty);
+
+            // inserisco lestensione
 
             return str.ToString();
         }

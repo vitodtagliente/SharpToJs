@@ -1,7 +1,7 @@
 ﻿using Irony.Parsing;
 using System;
 
-namespace GrammarLib.AST
+namespace SharpToJs.AST
 {
     public class NodeFactory
     {

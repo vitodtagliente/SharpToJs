@@ -1,14 +1,13 @@
-﻿using System.Text;
-
+﻿
 namespace SharpToJs.AST
 {
-    public class ConstructorNode : JsNode
+    public class StringNode : JsNode
     {
-        public ParametersNode Parameters { get; private set; }
+        public string Value { get; private set; }
 
         public override void SetBehaviour()
         {
-            Parameters = FindChild<ParametersNode>();
+            Value = Context.Token.Value.ToString();
         }
 
         public override string ToJs()

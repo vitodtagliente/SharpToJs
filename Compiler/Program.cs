@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using GrammarLib;
+using SharpToJs;
 
 namespace Compiler
 {
@@ -16,7 +16,10 @@ namespace Compiler
             JavascriptGenerator compiler = new JavascriptGenerator(new SharpGrammar());
             //source = "2+4";
             if (compiler.Parse(source) == false)
+            {
                 Console.WriteLine(compiler.Errors);
+                Console.WriteLine(compiler.AbstractSyntaxTree.Errors);
+            }
 
             string output = compiler.Compile();
             Console.WriteLine(output);

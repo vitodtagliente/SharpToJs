@@ -1,5 +1,5 @@
 ﻿
-namespace GrammarLib.AST
+namespace SharpToJs.AST
 {
     public class QualifiedIdentifierNode : JsNode
     {

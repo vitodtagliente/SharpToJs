@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace GrammarLib.AST
+namespace SharpToJs.AST
 {
     public class NamespaceNode : JsNode
     {

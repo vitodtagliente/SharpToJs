@@ -1,8 +1,8 @@
 ﻿using Irony.Parsing;
 using System.Text;
-using GrammarLib.AST;
+using SharpToJs.AST;
 
-namespace GrammarLib
+namespace SharpToJs
 {
     public class JavascriptGenerator
     {
@@ -42,7 +42,7 @@ namespace GrammarLib
             AbstractSyntaxTree.Parse();
             if (AbstractSyntaxTree.Status == AbstractSyntaxTreeStatus.Error)
             {
-                Errors = "Cannot parse AST";
+                Errors = "Cannot parse AST";                    
                 return false;
             }
 

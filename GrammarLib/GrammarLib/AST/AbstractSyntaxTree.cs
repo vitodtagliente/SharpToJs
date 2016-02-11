@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace GrammarLib.AST
+namespace SharpToJs.AST
 {
     public enum AbstractSyntaxTreeStatus
     {
@@ -17,7 +17,7 @@ namespace GrammarLib.AST
         public string Errors
         {
             get { return strErrors.ToString(); }
-            private set
+            set
             {
                 Status = AbstractSyntaxTreeStatus.Error;
                 strErrors.AppendLine(value);

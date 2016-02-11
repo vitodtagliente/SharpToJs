@@ -2,7 +2,7 @@
 using System.Text;
 using Irony.Parsing;
 
-namespace GrammarLib.AST
+namespace SharpToJs.AST
 {
     public class ParametersNode : JsNode
     {
@@ -24,7 +24,7 @@ namespace GrammarLib.AST
                 str.Append(add);
                 str.Append("var ");
                 str.Append(p);
-                add = ",";
+                add = ", ";
             }
             return str.ToString();
         }

@@ -1,6 +1,6 @@
 ﻿using Irony.Parsing;
 
-namespace GrammarLib
+namespace SharpToJs
 {
     [Language("C#", "1.0", "My C# implementation, Author: Vito Domenico Tagliente")]
     public class SharpGrammar : Irony.Parsing.Grammar
@@ -18,6 +18,7 @@ namespace GrammarLib
 
             Terminal numberToken = new NumberLiteral("number-token");
             Terminal stringToken = new StringLiteral("string-token", "\"", StringOptions.None);
+            stringToken.AstConfig.NodeType = typeof(AST.StringNode);
             Terminal identifierToken = new IdentifierTerminal("identifier-token");
             identifierToken.AstConfig.NodeType = typeof(AST.IdentifierToken);
                                     
@@ -52,8 +53,8 @@ namespace GrammarLib
 
             NonTerminal class_body = new NonTerminal("class-body", typeof(AST.JsNode));
 
-            NonTerminal visibility_modifiers = new NonTerminal("visibility-modifiers", typeof(AST.JsNode));
-            NonTerminal visibility_modifier = new NonTerminal("visibility-modifier", typeof(AST.VisibilityModifierNode));
+            NonTerminal visibility_modifiers = new NonTerminal("visibility-modifiers", typeof(AST.VisibilityModifierNode));
+            NonTerminal visibility_modifier = new NonTerminal("visibility-modifier", typeof(AST.KeywordNode));
 
             NonTerminal class_params = new NonTerminal("class-params");
             NonTerminal class_param = new NonTerminal("class-param");
@@ -72,8 +73,8 @@ namespace GrammarLib
 
             NonTerminal field_declaration = new NonTerminal("field-declaration", typeof(AST.FieldNode));
             NonTerminal constructor_declaration = new NonTerminal("constructor-declaration", typeof(AST.ConstructorNode));
-            NonTerminal method_declaration = new NonTerminal("method-declaration");
-            NonTerminal property_declaration = new NonTerminal("property-declaration");
+            NonTerminal method_declaration = new NonTerminal("method-declaration", typeof(AST.MethodNode));
+            NonTerminal property_declaration = new NonTerminal("property-declaration", typeof(AST.PropertyNode));
 
             NonTerminal method_parameters = new NonTerminal("method-parameters", typeof(AST.JsNode));
             NonTerminal parameters = new NonTerminal("parameters", typeof(AST.ParametersNode));
@@ -82,10 +83,10 @@ namespace GrammarLib
             NonTerminal method_body = new NonTerminal("method-body", typeof(AST.JsNode));
             NonTerminal block = new NonTerminal("block", typeof(AST.BlockNode));
 
-            NonTerminal property_body = new NonTerminal("property-body");
-            NonTerminal property_labels = new NonTerminal("property-labels");
-            NonTerminal property_set = new NonTerminal("property-set");
-            NonTerminal property_get = new NonTerminal("property-get");
+            NonTerminal property_body = new NonTerminal("property-body", typeof(AST.JsNode));
+            NonTerminal property_labels = new NonTerminal("property-labels", typeof(AST.JsNode));
+            NonTerminal property_set = new NonTerminal("property-set", typeof(AST.SetNode));
+            NonTerminal property_get = new NonTerminal("property-get", typeof(AST.GetNode));
 
             NonTerminal builtin_type = new NonTerminal("builtin-type");
             NonTerminal builtin_type_or_void = new NonTerminal("builtin-type-or-void");
@@ -118,8 +119,8 @@ namespace GrammarLib
 
             NonTerminal assign_statement = new NonTerminal("assign-statement");
             
-            NonTerminal expressions = new NonTerminal("expressions");
-            NonTerminal expression = new NonTerminal("expression");
+            NonTerminal expressions = new NonTerminal("expressions", typeof(AST.JsNode));
+            NonTerminal expression = new NonTerminal("expression", typeof(AST.JsNode));
 
             NonTerminal conditional_expression = new NonTerminal("conditional-expression");
             NonTerminal bin_op_expression = new NonTerminal("bin-op-expression");

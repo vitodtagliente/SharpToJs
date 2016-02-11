@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 
-namespace GrammarLib.AST
+namespace SharpToJs.AST
 {
     public class JsNode
     {
@@ -67,6 +67,17 @@ namespace GrammarLib.AST
             foreach (var child in Children)
                 str.Append(((JsNode)child).ToJs());
             return str.ToString();
+        }
+
+        public bool FindSymbolInChild(string symbol)
+        {
+            foreach(var child in Context.ChildNodes)
+            {
+                if (child.Token != null && child.Token.Text == symbol)
+                    return true;
+            }
+
+            return false;
         }
 
         public T FindChild<T>()
