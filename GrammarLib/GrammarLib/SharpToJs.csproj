@@ -7,8 +7,8 @@
     <ProjectGuid>{BD316D7E-8D16-4163-921F-BBF7BA9BB3A3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GrammarLib</RootNamespace>
-    <AssemblyName>GrammarLib</AssemblyName>
+    <RootNamespace>SharpToJs</RootNamespace>
+    <AssemblyName>SharpToJs</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -46,15 +46,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AST\AbstractSyntaxTree.cs" />
+    <Compile Include="AST\BlockNode.cs" />
     <Compile Include="AST\ClassNode.cs" />
     <Compile Include="AST\ConstructorNode.cs" />
+    <Compile Include="AST\FieldNode.cs" />
     <Compile Include="AST\IdentifierToken.cs" />
+    <Compile Include="AST\ParametersNode.cs" />
     <Compile Include="AST\QualifiedIdentifierNode.cs" />
     <Compile Include="AST\JsNode.cs" />
     <Compile Include="AST\NamespaceNode.cs" />
     <Compile Include="AST\NodeFactory.cs" />
     <Compile Include="AST\ProgramNode.cs" />
     <Compile Include="AST\SymbolTable.cs" />
+    <Compile Include="AST\VisibilityModifierNode.cs" />
     <Compile Include="JavascriptGenerator.cs" />
     <Content Include="SharpGrammar.backup.txt" />
     <Compile Include="SharpGrammar.cs" />

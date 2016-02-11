@@ -58,9 +58,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GrammarLib\GrammarLib\GrammarLib.csproj">
+    <ProjectReference Include="..\GrammarLib\GrammarLib\SharpToJs.csproj">
       <Project>{bd316d7e-8d16-4163-921f-bbf7ba9bb3a3}</Project>
-      <Name>GrammarLib</Name>
+      <Name>SharpToJs</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

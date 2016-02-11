@@ -1,0 +1,7 @@
+D:\Documents\Poliba\Magistrale\Compilatori\Progetto\SharpToJS\GrammarLib\GrammarLib\bin\Debug\SharpToJs.dll
+D:\Documents\Poliba\Magistrale\Compilatori\Progetto\SharpToJS\GrammarLib\GrammarLib\bin\Debug\SharpToJs.pdb
+D:\Documents\Poliba\Magistrale\Compilatori\Progetto\SharpToJS\GrammarLib\GrammarLib\bin\Debug\Irony.dll
+D:\Documents\Poliba\Magistrale\Compilatori\Progetto\SharpToJS\GrammarLib\GrammarLib\bin\Debug\Irony.Interpreter.dll
+D:\Documents\Poliba\Magistrale\Compilatori\Progetto\SharpToJS\GrammarLib\GrammarLib\bin\Debug\Irony.Interpreter.pdb
+D:\Documents\Poliba\Magistrale\Compilatori\Progetto\SharpToJS\GrammarLib\GrammarLib\obj\Debug\SharpToJs.dll
+D:\Documents\Poliba\Magistrale\Compilatori\Progetto\SharpToJS\GrammarLib\GrammarLib\obj\Debug\SharpToJs.pdb

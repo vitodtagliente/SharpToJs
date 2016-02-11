@@ -1,14 +1,15 @@
-﻿using System.Text;
+﻿using System.Collections.Generic;
+using System.Text;
 
 namespace GrammarLib.AST
 {
-    public class ConstructorNode : JsNode
+    public class FieldNode : JsNode
     {
-        public ParametersNode Parameters { get; private set; }
+        
 
         public override void SetBehaviour()
         {
-            Parameters = FindChild<ParametersNode>();
+            
         }
 
         public override string ToJs()

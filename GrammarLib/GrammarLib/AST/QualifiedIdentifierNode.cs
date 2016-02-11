@@ -1,22 +1,21 @@
-﻿using Irony.Parsing;
-
+﻿
 namespace GrammarLib.AST
 {
     public class QualifiedIdentifierNode : JsNode
     {
         public string Value { get; private set; }
 
-        public override void SetChildren(ParseTreeNodeList children)
+        public override void SetBehaviour()
         {
             string comma = string.Empty;
-            for (int i = 0; i < children.Count; i++)
+            for (int i = 0; i < Context.ChildNodes.Count; i++)
             {
-                Value += (comma + children[i].Token.Value);
+                Value += (comma + Context.ChildNodes[i].Token.Value);
                 comma = ".";
             }
         }
 
-        public override string ToJS()
+        public override string ToJs()
         {
             return string.Empty;
         }

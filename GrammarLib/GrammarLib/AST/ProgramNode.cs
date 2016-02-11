@@ -1,19 +1,19 @@
 ﻿using System.Text;
-using Irony.Parsing;
 
 namespace GrammarLib.AST
 {
     public class ProgramNode : JsNode
     {
-        public override string ToJS()
+        public override string ToJs()
         {
             StringBuilder str = new StringBuilder();
             str.AppendLine(string.Empty);
             str.AppendLine("/*");
             str.AppendLine(" * Build with SharpToJs Compiler");
+            str.AppendLine(" * Author: Vito Domenico Tagliente");
             str.AppendLine(" */");
             str.AppendLine(string.Empty);
-            str.AppendLine(base.ToJS());
+            str.AppendLine(base.ToJs());
             return str.ToString();
         }
     }

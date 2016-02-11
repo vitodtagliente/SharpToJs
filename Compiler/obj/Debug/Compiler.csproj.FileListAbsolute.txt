@@ -1,10 +1,10 @@
 D:\Documents\Poliba\Magistrale\Compilatori\Progetto\SharpToJS\Compiler\bin\Debug\Compiler.exe.config
 D:\Documents\Poliba\Magistrale\Compilatori\Progetto\SharpToJS\Compiler\bin\Debug\Compiler.exe
 D:\Documents\Poliba\Magistrale\Compilatori\Progetto\SharpToJS\Compiler\bin\Debug\Compiler.pdb
-D:\Documents\Poliba\Magistrale\Compilatori\Progetto\SharpToJS\Compiler\bin\Debug\GrammarLib.dll
 D:\Documents\Poliba\Magistrale\Compilatori\Progetto\SharpToJS\Compiler\bin\Debug\Irony.dll
 D:\Documents\Poliba\Magistrale\Compilatori\Progetto\SharpToJS\Compiler\bin\Debug\Irony.Interpreter.dll
-D:\Documents\Poliba\Magistrale\Compilatori\Progetto\SharpToJS\Compiler\bin\Debug\GrammarLib.pdb
 D:\Documents\Poliba\Magistrale\Compilatori\Progetto\SharpToJS\Compiler\obj\Debug\Compiler.csprojResolveAssemblyReference.cache
 D:\Documents\Poliba\Magistrale\Compilatori\Progetto\SharpToJS\Compiler\obj\Debug\Compiler.exe
 D:\Documents\Poliba\Magistrale\Compilatori\Progetto\SharpToJS\Compiler\obj\Debug\Compiler.pdb
+D:\Documents\Poliba\Magistrale\Compilatori\Progetto\SharpToJS\Compiler\bin\Debug\SharpToJs.dll
+D:\Documents\Poliba\Magistrale\Compilatori\Progetto\SharpToJS\Compiler\bin\Debug\SharpToJs.pdb

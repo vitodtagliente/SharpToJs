@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using Irony.Parsing;
 
 namespace GrammarLib.AST
 {
@@ -8,10 +7,10 @@ namespace GrammarLib.AST
         public ConstructorNode Constructor { get; private set; }
         public string Name { get; private set; }
 
-        public override void AfterInit()
+        public override void SetBehaviour()
         {
-            Constructor = FindInChildren<ConstructorNode>();
-            var identifier = FindInChildren<IdentifierToken>();
+            Constructor = FindChild<ConstructorNode>();
+            var identifier = FindChild<IdentifierToken>();
             if(identifier != null)
             {
                 Name = identifier.Value;
@@ -19,19 +18,23 @@ namespace GrammarLib.AST
             }            
         }
 
-        public override string ToJS()
+        public override string ToJs()
         {
             StringBuilder str = new StringBuilder();
             
             str.AppendLine(string.Empty);
-            str.Append(Table.Last.Name);
+            str.Append(AST.Table.Last.Name);
             str.Append(".");
             str.Append(Name);
-            str.Append(" = function()");
+            str.Append(" = function(");
+
+            str.Append(Constructor.Parameters.ToJs());
+
+            str.Append(")");
             str.AppendLine("{");
             str.AppendLine(string.Empty);
 
-            str.Append(base.ToJS());
+            str.Append(base.ToJs());
 
             str.AppendLine(string.Empty);
             str.AppendLine("}");

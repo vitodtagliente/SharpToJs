@@ -1,21 +1,20 @@
 ﻿using System.Text;
-using Irony.Parsing;
 
 namespace GrammarLib.AST
 {
     public class NamespaceNode : JsNode
     {
-        public string Identifier { get; private set; }
+        public string Name { get; private set; }
 
-        public override void AfterInit()
+        public override void SetBehaviour()
         {            
             foreach(var child in Children)
             {
                 if (child.GetType() == typeof(QualifiedIdentifierNode))
                 {
-                    Identifier = ((QualifiedIdentifierNode)child).Value;
+                    Name = ((QualifiedIdentifierNode)child).Value;
 
-                    Table.Push(new Symbol(Identifier, "namespace"));
+                    AST.Table.Push(new Symbol(Name, "namespace"));
 
                     Children.Remove(child);
                     break;
@@ -23,18 +22,18 @@ namespace GrammarLib.AST
             }
         }
 
-        public override string ToJS()
+        public override string ToJs()
         {
             StringBuilder str = new StringBuilder();
             str.Append("var ");
-            str.Append(Identifier);
+            str.Append(Name);
             str.Append(" = ");
-            str.Append(Identifier);
+            str.Append(Name);
             str.Append(" || {};");
             str.AppendLine(string.Empty);
-            str.AppendLine(base.ToJS());
+            str.AppendLine(base.ToJs());
 
-            Table.Pop();
+            AST.Table.Pop();
 
             return str.ToString();
         }

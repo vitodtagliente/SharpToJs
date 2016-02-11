@@ -8,13 +8,9 @@ namespace GrammarLib.AST
     {
         public List<object> Children { get; protected set; }
         public JsNode Parent;
-        public static SymbolTable Table = new SymbolTable();
-        static StringBuilder strErrors = new StringBuilder();
-        public static string Errors
-        {
-            get { return strErrors.ToString(); }
-            private set { strErrors.AppendLine(value); }
-        }
+        public AbstractSyntaxTree AST;
+        
+        public ParseTreeNode Context { get; private set; }   
 
         public bool IsRoot
         {
@@ -33,11 +29,16 @@ namespace GrammarLib.AST
             Children = new List<object>();
         }
 
-        public virtual void Init(ParseTreeNode node)
+        public void Init(ParseTreeNode node)
         {
             Label = node.Term.Name;
-            SetChildren(node.ChildNodes);
-            AfterInit();
+            Context = node;
+        }
+
+        public void Parse()
+        {
+            SetChildren(Context.ChildNodes);
+            SetBehaviour();
         }
 
         public virtual void SetChildren(ParseTreeNodeList children)
@@ -48,24 +49,27 @@ namespace GrammarLib.AST
                 if (node == null)
                     continue;
                 Children.Add(node);
+
                 ((JsNode)node).Parent = this;
+                ((JsNode)node).AST = AST;
+                ((JsNode)node).Parse();
             }
         }
 
-        public virtual void AfterInit()
+        public virtual void SetBehaviour()
         {
 
         }
 
-        public virtual string ToJS()
+        public virtual string ToJs()
         {
             StringBuilder str = new StringBuilder();
             foreach (var child in Children)
-                str.Append(((JsNode)child).ToJS());
+                str.Append(((JsNode)child).ToJs());
             return str.ToString();
         }
 
-        public T FindInChildren<T>()
+        public T FindChild<T>()
         {
             foreach(var child in Children)
             {
@@ -75,11 +79,30 @@ namespace GrammarLib.AST
 
             foreach(var child in Children)
             {
-                var result = ((JsNode)child).FindInChildren<T>();
+                var result = ((JsNode)child).FindChild<T>();
                 if (result != null)
                     return (T)result;
             }
             return default(T);
+        }
+
+        public List<T> FindChildren<T>()
+        {
+            var list = new List<T>();
+
+            foreach (var child in Children)
+            {
+                if (child.GetType() == typeof(T))
+                    list.Add( (T)child );
+            }
+
+            foreach (var child in Children)
+            {
+                var result = ((JsNode)child).FindChildren<T>();
+                list.AddRange(result);
+            }
+
+            return list;
         }
     }
 }

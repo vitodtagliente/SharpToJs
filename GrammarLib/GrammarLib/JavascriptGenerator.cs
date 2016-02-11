@@ -1,5 +1,6 @@
 ﻿using Irony.Parsing;
 using System.Text;
+using GrammarLib.AST;
 
 namespace GrammarLib
 {
@@ -16,7 +17,7 @@ namespace GrammarLib
             private set { strErrors.AppendLine(value); }
         }
 
-        public AST.JsNode AbstractSyntaxTree { get; private set; }
+        public AbstractSyntaxTree AbstractSyntaxTree { get; private set; }
 
         public JavascriptGenerator(Grammar grammar)
         {
@@ -36,9 +37,10 @@ namespace GrammarLib
             }
 
             // create AST
-            
-            AbstractSyntaxTree = (AST.JsNode)AST.NodeFactory.Map(parse_tree.Root);
-            if (AbstractSyntaxTree == null)
+
+            AbstractSyntaxTree = new AbstractSyntaxTree((JsNode)NodeFactory.Map(parse_tree.Root));
+            AbstractSyntaxTree.Parse();
+            if (AbstractSyntaxTree.Status == AbstractSyntaxTreeStatus.Error)
             {
                 Errors = "Cannot parse AST";
                 return false;
@@ -49,8 +51,8 @@ namespace GrammarLib
 
         public string Compile()
         {
-            if (AbstractSyntaxTree != null)
-                return AbstractSyntaxTree.ToJS();
+            if (AbstractSyntaxTree.Status != AbstractSyntaxTreeStatus.Error)
+                return AbstractSyntaxTree.ToJs();
             return string.Empty;
         }
     }

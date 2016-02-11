@@ -1,18 +1,16 @@
-﻿using Irony.Parsing;
-
+﻿
 namespace GrammarLib.AST
 {
     public class IdentifierToken : JsNode
     {
         public string Value { get; private set; }
 
-        public override void Init(ParseTreeNode node)
+        public override void SetBehaviour()
         {
-            base.Init(node);
-            Value = node.Token.Value.ToString();
+            Value = Context.Token.Value.ToString();
         }
 
-        public override string ToJS()
+        public override string ToJs()
         {
             return string.Empty;
         }

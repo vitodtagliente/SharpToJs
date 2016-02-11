@@ -52,8 +52,8 @@ namespace GrammarLib
 
             NonTerminal class_body = new NonTerminal("class-body", typeof(AST.JsNode));
 
-            NonTerminal visibility_modifiers = new NonTerminal("visibility-modifiers");
-            NonTerminal visibility_modifier = new NonTerminal("visibility-modifier");
+            NonTerminal visibility_modifiers = new NonTerminal("visibility-modifiers", typeof(AST.JsNode));
+            NonTerminal visibility_modifier = new NonTerminal("visibility-modifier", typeof(AST.VisibilityModifierNode));
 
             NonTerminal class_params = new NonTerminal("class-params");
             NonTerminal class_param = new NonTerminal("class-param");
@@ -70,17 +70,17 @@ namespace GrammarLib
             NonTerminal constant_declarators = new NonTerminal("constant-declarators");
             NonTerminal constant_declarator = new NonTerminal("constant-declarator");
 
-            NonTerminal field_declaration = new NonTerminal("field-declaration");
+            NonTerminal field_declaration = new NonTerminal("field-declaration", typeof(AST.FieldNode));
             NonTerminal constructor_declaration = new NonTerminal("constructor-declaration", typeof(AST.ConstructorNode));
             NonTerminal method_declaration = new NonTerminal("method-declaration");
             NonTerminal property_declaration = new NonTerminal("property-declaration");
 
-            NonTerminal method_parameters = new NonTerminal("method-parameters");
-            NonTerminal parameters = new NonTerminal("parameters");
-            NonTerminal parameter = new NonTerminal("parameter");
+            NonTerminal method_parameters = new NonTerminal("method-parameters", typeof(AST.JsNode));
+            NonTerminal parameters = new NonTerminal("parameters", typeof(AST.ParametersNode));
+            NonTerminal parameter = new NonTerminal("parameter", typeof(AST.JsNode));
 
-            NonTerminal method_body = new NonTerminal("method-body");
-            NonTerminal block = new NonTerminal("block");
+            NonTerminal method_body = new NonTerminal("method-body", typeof(AST.JsNode));
+            NonTerminal block = new NonTerminal("block", typeof(AST.BlockNode));
 
             NonTerminal property_body = new NonTerminal("property-body");
             NonTerminal property_labels = new NonTerminal("property-labels");
@@ -91,8 +91,8 @@ namespace GrammarLib
             NonTerminal builtin_type_or_void = new NonTerminal("builtin-type-or-void");
             NonTerminal qualified_type = new NonTerminal("qualified-type");
 
-            NonTerminal statements = new NonTerminal("statements");
-            NonTerminal statement = new NonTerminal("statement");
+            NonTerminal statements = new NonTerminal("statements", typeof(AST.JsNode));
+            NonTerminal statement = new NonTerminal("statement", typeof(AST.JsNode));
 
             NonTerminal embedded_statement = new NonTerminal("embedded-statement");
             NonTerminal control_flow_statement = new NonTerminal("control-flow-statement");
@@ -214,6 +214,7 @@ namespace GrammarLib
                 | "protected"
                 | "virtual"
                 | "abstract"
+                | "override"
                 ;
 
             class_params.Rule = ToTerm(":") + class_param
