@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="AST\AbstractSyntaxTree.cs" />
     <Compile Include="AST\BlockNode.cs" />
+    <Compile Include="AST\BooleanNode.cs" />
     <Compile Include="AST\ClassNode.cs" />
     <Compile Include="AST\ConstructorNode.cs" />
     <Compile Include="AST\FieldNode.cs" />

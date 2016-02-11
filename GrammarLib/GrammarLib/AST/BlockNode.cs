@@ -8,9 +8,8 @@ namespace SharpToJs.AST
         {
             StringBuilder str = new StringBuilder();
             str.AppendLine("{");
-            str.AppendLine(base.ToJs());
+            str.Append(base.ToJs());
             str.AppendLine("}");
-            str.AppendLine(string.Empty);
             return str.ToString();
         }
     }

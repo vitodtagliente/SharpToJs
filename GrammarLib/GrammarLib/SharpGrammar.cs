@@ -95,7 +95,7 @@ namespace SharpToJs
             NonTerminal statements = new NonTerminal("statements", typeof(AST.JsNode));
             NonTerminal statement = new NonTerminal("statement", typeof(AST.JsNode));
 
-            NonTerminal embedded_statement = new NonTerminal("embedded-statement");
+            NonTerminal embedded_statement = new NonTerminal("embedded-statement", typeof(AST.JsNode));
             NonTerminal control_flow_statement = new NonTerminal("control-flow-statement");
             NonTerminal declaration_statement = new NonTerminal("declaration-statement");
             NonTerminal if_statement = new NonTerminal("if-statement");
@@ -139,7 +139,7 @@ namespace SharpToJs
             NonTerminal binary_operator = new NonTerminal("binary-operator", "operator");
             NonTerminal incr_dec_operator = new NonTerminal("incr-dec-operator", "operator");
 
-            NonTerminal boolean_token = new NonTerminal("boolean-token");
+            NonTerminal boolean_token = new NonTerminal("boolean-token", typeof(AST.BooleanNode));
             NonTerminal object_token = new NonTerminal("object-token");
 
             NonTerminal element = new NonTerminal("element");
