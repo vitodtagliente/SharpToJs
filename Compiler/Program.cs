@@ -24,6 +24,11 @@ namespace Compiler
             string output = compiler.Compile();
             Console.WriteLine(output);
 
+            StreamWriter wr = new StreamWriter("debug.txt");
+            wr.Write(output);
+            wr.Close();
+            wr.Dispose();
+
             Console.ReadKey();
         }
     }

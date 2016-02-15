@@ -43,6 +43,7 @@ namespace SharpToJs.AST
 
             // inserisco le operazioni del costruttore
             str.AppendLine(string.Empty);
+            str.Append(Tab);
             str.AppendLine("// Constructor");
             str.AppendLine(string.Empty);
             str.AppendLine(Constructor.ToJs());
