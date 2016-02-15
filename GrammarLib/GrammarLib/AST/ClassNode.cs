@@ -6,16 +6,17 @@ namespace SharpToJs.AST
     {
         public ConstructorNode Constructor { get; private set; }
         public string Name { get; private set; }
-
+        
         public override void SetBehaviour()
         {
             Constructor = FindChild<ConstructorNode>();
+            if(Constructor != null)
+            {
+                Constructor.Parent.Children.Remove(Constructor);
+            }
             var identifier = FindChild<IdentifierToken>();
             if(identifier != null)
-            {
                 Name = identifier.Value;
-                Children.Remove(identifier);
-            }            
         }
 
         public override string ToJs()
@@ -34,14 +35,21 @@ namespace SharpToJs.AST
             str.AppendLine("{");
             str.AppendLine(string.Empty);
 
-            str.Append(base.ToJs());
+            Shift();
+
+            var body = FindChild<ClassBodyNode>();
+            if (body != null)
+                str.Append(body.ToJs());
 
             // inserisco le operazioni del costruttore
             str.AppendLine(string.Empty);
             str.AppendLine("// Constructor");
             str.AppendLine(string.Empty);
-
+            str.AppendLine(Constructor.ToJs());
             str.AppendLine(string.Empty);
+
+            Unshift();
+
             str.AppendLine("}");
             str.AppendLine(string.Empty);
 

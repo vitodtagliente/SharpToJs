@@ -18,19 +18,20 @@ namespace SharpToJs.AST
         public override string ToJs()
         {
             StringBuilder str = new StringBuilder();
-
+            
             str.AppendLine(string.Empty);
+            str.Append(Tab);
             str.Append(modifiers.Value);
             str.Append(id.Value);
             str.Append(" = function(");
             if(parameters != null)
                 str.Append(parameters.ToJs());
             str.Append(")");
-            str.Append("{");
             str.AppendLine(string.Empty);
 
-            str.AppendLine(string.Empty);
-            str.AppendLine("}");
+            var body = FindChild<BlockNode>();
+            if (body != null)
+                str.Append(body.ToJs());
 
             return str.ToString();
         }

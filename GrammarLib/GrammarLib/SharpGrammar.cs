@@ -17,6 +17,7 @@ namespace SharpToJs
             NonGrammarTerminals.Add(lineComment);
 
             Terminal numberToken = new NumberLiteral("number-token");
+            numberToken.AstConfig.NodeType = typeof(AST.NumberNode);
             Terminal stringToken = new StringLiteral("string-token", "\"", StringOptions.None);
             stringToken.AstConfig.NodeType = typeof(AST.StringNode);
             Terminal identifierToken = new IdentifierTerminal("identifier-token");
@@ -51,7 +52,7 @@ namespace SharpToJs
             NonTerminal interface_declaration = new NonTerminal("interface-declaration");
             NonTerminal enum_declaration = new NonTerminal("enum-declaration");
 
-            NonTerminal class_body = new NonTerminal("class-body", typeof(AST.JsNode));
+            NonTerminal class_body = new NonTerminal("class-body", typeof(AST.ClassBodyNode));
 
             NonTerminal visibility_modifiers = new NonTerminal("visibility-modifiers", typeof(AST.VisibilityModifierNode));
             NonTerminal visibility_modifier = new NonTerminal("visibility-modifier", typeof(AST.KeywordNode));
@@ -88,18 +89,18 @@ namespace SharpToJs
             NonTerminal property_set = new NonTerminal("property-set", typeof(AST.SetNode));
             NonTerminal property_get = new NonTerminal("property-get", typeof(AST.GetNode));
 
-            NonTerminal builtin_type = new NonTerminal("builtin-type");
-            NonTerminal builtin_type_or_void = new NonTerminal("builtin-type-or-void");
-            NonTerminal qualified_type = new NonTerminal("qualified-type");
+            NonTerminal builtin_type = new NonTerminal("builtin-type", typeof(AST.JsNode));
+            NonTerminal builtin_type_or_void = new NonTerminal("builtin-type-or-void", typeof(AST.JsNode));
+            NonTerminal qualified_type = new NonTerminal("qualified-type", typeof(AST.JsNode));
 
             NonTerminal statements = new NonTerminal("statements", typeof(AST.JsNode));
-            NonTerminal statement = new NonTerminal("statement", typeof(AST.JsNode));
+            NonTerminal statement = new NonTerminal("statement", typeof(AST.StatementNode));
 
             NonTerminal embedded_statement = new NonTerminal("embedded-statement", typeof(AST.JsNode));
-            NonTerminal control_flow_statement = new NonTerminal("control-flow-statement");
+            NonTerminal control_flow_statement = new NonTerminal("control-flow-statement", typeof(AST.JsNode));
             NonTerminal declaration_statement = new NonTerminal("declaration-statement");
-            NonTerminal if_statement = new NonTerminal("if-statement");
-            NonTerminal else_statement = new NonTerminal("else-statement");
+            NonTerminal if_statement = new NonTerminal("if-statement", typeof(AST.IfStmtNode));
+            NonTerminal else_statement = new NonTerminal("else-statement", typeof(AST.ElseStmtNode));
             NonTerminal do_statement = new NonTerminal("do-statement");
             NonTerminal switch_statement = new NonTerminal("switch-statement");
             NonTerminal switch_body = new NonTerminal("switch-body");
@@ -112,42 +113,42 @@ namespace SharpToJs
             NonTerminal for_iterator = new NonTerminal("for-iterator");
             NonTerminal while_statement = new NonTerminal("while-statement");
             NonTerminal expression_statement = new NonTerminal("expression-statement");
-            NonTerminal return_statement = new NonTerminal("return-statement");
+            NonTerminal return_statement = new NonTerminal("return-statement", typeof(AST.ReturnStmtNode));
 
             NonTerminal variable_declarations = new NonTerminal("variable-declarations");
             NonTerminal variable_declaration = new NonTerminal("variable-declaration");
 
-            NonTerminal assign_statement = new NonTerminal("assign-statement");
+            NonTerminal assign_statement = new NonTerminal("assign-statement", typeof(AST.AssignmentStmtNode));
             
             NonTerminal expressions = new NonTerminal("expressions", typeof(AST.JsNode));
             NonTerminal expression = new NonTerminal("expression", typeof(AST.JsNode));
 
             NonTerminal conditional_expression = new NonTerminal("conditional-expression");
-            NonTerminal bin_op_expression = new NonTerminal("bin-op-expression");
+            NonTerminal bin_op_expression = new NonTerminal("bin-op-expression", typeof(AST.JsNode));
             NonTerminal typecast_expression = new NonTerminal("typecast-expression");
-            NonTerminal primary_expression = new NonTerminal("primary-expression");
+            NonTerminal primary_expression = new NonTerminal("primary-expression", typeof(AST.JsNode));
 
             NonTerminal object_creation_expression = new NonTerminal("object-creation-expression");
             NonTerminal pre_incr_decr_expression = new NonTerminal("pre-incr-decr-expression");
             NonTerminal post_incr_decr_expression = new NonTerminal("post-incr-decr-expression");
             NonTerminal typeof_expression = new NonTerminal("typeof-expression");
-            NonTerminal unary_expression = new NonTerminal("unary-expression");
-            NonTerminal member_expression = new NonTerminal("member-expression");
+            NonTerminal unary_expression = new NonTerminal("unary-expression", typeof(AST.JsNode));
+            NonTerminal member_expression = new NonTerminal("member-expression", typeof(AST.MemberExpressionNode));
 
-            NonTerminal unary_operator = new NonTerminal("unary-operator", "operator");
-            NonTerminal assignment_operator = new NonTerminal("assignment-operator", "assignment operator");
-            NonTerminal binary_operator = new NonTerminal("binary-operator", "operator");
-            NonTerminal incr_dec_operator = new NonTerminal("incr-dec-operator", "operator");
+            NonTerminal unary_operator = new NonTerminal("unary-operator", "operator", typeof(AST.OperatorNode));
+            NonTerminal assignment_operator = new NonTerminal("assignment-operator", "assignment operator", typeof(AST.OperatorNode));
+            NonTerminal binary_operator = new NonTerminal("binary-operator", "operator", typeof(AST.OperatorNode));
+            NonTerminal incr_dec_operator = new NonTerminal("incr-dec-operator", "operator", typeof(AST.OperatorNode));
 
             NonTerminal boolean_token = new NonTerminal("boolean-token", typeof(AST.BooleanNode));
-            NonTerminal object_token = new NonTerminal("object-token");
+            NonTerminal object_token = new NonTerminal("object-token", typeof(AST.ObjectNode));
 
-            NonTerminal element = new NonTerminal("element");
-            NonTerminal builtin_element = new NonTerminal("builtin-element");
+            NonTerminal element = new NonTerminal("element", typeof(AST.JsNode));
+            NonTerminal builtin_element = new NonTerminal("builtin-element", typeof(AST.JsNode));
 
-            NonTerminal function_arguments = new NonTerminal("function-arguments");
-            NonTerminal arguments = new NonTerminal("arguments");
-            NonTerminal argument = new NonTerminal("argument");
+            NonTerminal function_arguments = new NonTerminal("function-arguments", typeof(AST.FunctionArgumentsNode));
+            NonTerminal arguments = new NonTerminal("arguments", typeof(AST.ArgumentsNode));
+            NonTerminal argument = new NonTerminal("argument", typeof(AST.ArgumentNode));
 
             #endregion
 
@@ -532,7 +533,7 @@ namespace SharpToJs
             this.RegisterOperators(30, "=", "<=", ">=", "<", ">", "<>");
             this.RegisterOperators(20, "&&", "||");
 
-            MarkTransient(unary_operator, binary_operator, incr_dec_operator, assignment_operator);
+            //MarkTransient(unary_operator, binary_operator, incr_dec_operator, assignment_operator);
 
             MarkTransient(using_directives_lines);
             MarkTransient(namespace_declarations);

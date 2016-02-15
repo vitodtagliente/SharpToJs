@@ -9,6 +9,9 @@ namespace SharpToJs.AST
         public List<object> Children { get; protected set; }
         public JsNode Parent;
         public AbstractSyntaxTree AST;
+
+        static StringBuilder tab = new StringBuilder();
+        public static string Tab { get { return tab.ToString(); } set { tab.Append(value); } }
         
         public ParseTreeNode Context { get; private set; }   
 
@@ -33,6 +36,12 @@ namespace SharpToJs.AST
         {
             Label = node.Term.Name;
             Context = node;
+            AfterInit();
+        }
+
+        public virtual void AfterInit()
+        {
+
         }
 
         public void Parse()
@@ -56,6 +65,23 @@ namespace SharpToJs.AST
             }
         }
 
+        public void Remove()
+        {
+            if (Parent != null)
+                Parent.Children.Remove(this);
+        }
+
+        public void Shift()
+        {
+            tab.Append("\t");
+        }
+
+        public void Unshift()
+        {
+            if (tab.Length > 0)
+                tab.Remove(tab.Length - ("\t").Length, ("\t").Length);
+        }
+        
         public virtual void SetBehaviour()
         {
 
@@ -65,11 +91,13 @@ namespace SharpToJs.AST
         {
             StringBuilder str = new StringBuilder();
             foreach (var child in Children)
+            {
                 str.Append(((JsNode)child).ToJs());
+            }
             return str.ToString();
         }
 
-        public bool FindSymbolInChild(string symbol)
+        public bool FindSymbolInChildren(string symbol)
         {
             foreach(var child in Context.ChildNodes)
             {
@@ -80,13 +108,26 @@ namespace SharpToJs.AST
             return false;
         }
 
-        public T FindChild<T>()
+        public JsNode FindChild(string name)
+        {
+            foreach(var child in Children)
+            {
+                if (((JsNode)child).Label.ToLower() == name.ToLower())
+                    return ((JsNode)child);
+            }
+            return null;
+        }
+
+        public T FindChild<T>(bool recursive = true)
         {
             foreach(var child in Children)
             {
                 if (child.GetType() == typeof(T))
                     return (T)child;
             }
+
+            if (!recursive)
+                return default(T);
 
             foreach(var child in Children)
             {
@@ -97,7 +138,7 @@ namespace SharpToJs.AST
             return default(T);
         }
 
-        public List<T> FindChildren<T>()
+        public List<T> FindChildren<T>(bool recursive = true)
         {
             var list = new List<T>();
 
@@ -106,6 +147,9 @@ namespace SharpToJs.AST
                 if (child.GetType() == typeof(T))
                     list.Add( (T)child );
             }
+
+            if (!recursive)
+                return list;
 
             foreach (var child in Children)
             {

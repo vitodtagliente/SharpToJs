@@ -7,12 +7,12 @@ namespace SharpToJs.AST
 
         public override void SetBehaviour()
         {
-            Value = Context.Token.Value.ToString();
+            Value = Context.Token.Text;
         }
 
         public override string ToJs()
         {
-            return string.Empty;
+            return Value;
         }
     }
 }

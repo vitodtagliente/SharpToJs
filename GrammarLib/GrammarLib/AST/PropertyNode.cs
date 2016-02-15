@@ -4,35 +4,36 @@ namespace SharpToJs.AST
 {
     public class PropertyNode : JsNode
     {
+        public string Name { get; private set; }
         IdentifierToken id;
-        GetNode get;
-        SetNode set;
 
         public override void SetBehaviour()
         {
             id = FindChild<IdentifierToken>();
-            get = FindChild<GetNode>();
-            set = FindChild<SetNode>();
+            Name = string.Empty;
+            if (id != null)
+            {
+                Name = id.Value;
+            }
         }
 
         public override string ToJs()
         {
             StringBuilder str = new StringBuilder();
             str.AppendLine(string.Empty);
+            str.Append(Tab);
             str.Append("Object.defineProperty( this, '" + id.Value + "', {");
+            str.AppendLine(string.Empty);
 
-            if (get != null && get.IsLeaf == false)
-            {
-                str.AppendLine(string.Empty);
-                str.Append(get.ToJs());
-            }
+            Shift();
 
-            if (set != null && set.IsLeaf == false)
-            {
-                str.AppendLine(string.Empty);
-                str.Append(set.ToJs());
-            }
+            var body = FindChild("property-body");
+            if (body != null)
+                str.AppendLine(body.ToJs());
 
+            Unshift();
+
+            str.Append(Tab);
             str.AppendLine("} );");
             return str.ToString();
         }

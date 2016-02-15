@@ -47,16 +47,25 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AST\AbstractSyntaxTree.cs" />
+    <Compile Include="AST\ArgumentNode.cs" />
+    <Compile Include="AST\ArgumentsNode.cs" />
+    <Compile Include="AST\AssignmentStmtNode.cs" />
     <Compile Include="AST\BlockNode.cs" />
     <Compile Include="AST\BooleanNode.cs" />
     <Compile Include="AST\ClassNode.cs" />
     <Compile Include="AST\ConstructorNode.cs" />
+    <Compile Include="AST\ElseStmtNode.cs" />
     <Compile Include="AST\FieldNode.cs" />
+    <Compile Include="AST\FunctionArgumentsNode.cs" />
     <Compile Include="AST\GetNode.cs" />
     <Compile Include="AST\IdentifierToken.cs" />
-    <Compile Include="AST\KeySymbolNode.cs" />
+    <Compile Include="AST\IfStmtNode.cs" />
     <Compile Include="AST\KeywordNode.cs" />
+    <Compile Include="AST\MemberExpressionNode.cs" />
     <Compile Include="AST\MethodNode.cs" />
+    <Compile Include="AST\NumberNode.cs" />
+    <Compile Include="AST\ObjectNode.cs" />
+    <Compile Include="AST\OperatorNode.cs" />
     <Compile Include="AST\ParametersNode.cs" />
     <Compile Include="AST\PropertyNode.cs" />
     <Compile Include="AST\QualifiedIdentifierNode.cs" />
@@ -64,10 +73,13 @@
     <Compile Include="AST\NamespaceNode.cs" />
     <Compile Include="AST\NodeFactory.cs" />
     <Compile Include="AST\ProgramNode.cs" />
+    <Compile Include="AST\ReturnStmtNode.cs" />
     <Compile Include="AST\SetNode.cs" />
+    <Compile Include="AST\StatementNode.cs" />
     <Compile Include="AST\StringNode.cs" />
     <Compile Include="AST\SymbolTable.cs" />
     <Compile Include="AST\VisibilityModifierNode.cs" />
+    <Compile Include="AST\ClassBodyNode.cs" />
     <Compile Include="JavascriptGenerator.cs" />
     <Content Include="SharpGrammar.backup.txt" />
     <Compile Include="SharpGrammar.cs" />

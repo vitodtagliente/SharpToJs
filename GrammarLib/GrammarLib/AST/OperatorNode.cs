@@ -1,14 +1,15 @@
-﻿
+﻿using System.Text;
+
 namespace SharpToJs.AST
 {
-    public class KeywordNode : JsNode
+    public class OperatorNode : JsNode
     {
         public string Value { get; private set; }
 
         public override void SetBehaviour()
         {
             Value = string.Empty;
-            if(Context.ChildNodes.Count > 0)
+            if (Context.ChildNodes.Count > 0)
             {
                 Value = Context.ChildNodes[0].Token.Text;
             }
@@ -16,7 +17,7 @@ namespace SharpToJs.AST
 
         public override string ToJs()
         {
-            return Value;
+            return " " + Value + " ";
         }
     }
 }

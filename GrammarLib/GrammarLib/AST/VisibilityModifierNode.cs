@@ -33,7 +33,7 @@ namespace SharpToJs.AST
 
         public override string ToJs()
         {            
-            return string.Empty;
+            return Value;
         }
     }
 }

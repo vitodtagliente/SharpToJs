@@ -2,22 +2,15 @@
 
 namespace SharpToJs.AST
 {
-    public class BlockNode : JsNode
+    public class StatementNode : JsNode
     {
         public override string ToJs()
         {
             StringBuilder str = new StringBuilder();
             str.Append(Tab);
-            str.AppendLine("{");
-
-            Shift();
-
             str.Append(base.ToJs());
-
-            Unshift();
-
-            str.Append(Tab);
-            str.AppendLine("}");
+            str.Append(";");
+            str.AppendLine(string.Empty);
             return str.ToString();
         }
     }

@@ -5,7 +5,7 @@ namespace SharpToJs.AST
     public class NamespaceNode : JsNode
     {
         public string Name { get; private set; }
-
+        
         public override void SetBehaviour()
         {            
             foreach(var child in Children)

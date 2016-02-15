@@ -13,6 +13,13 @@ namespace SharpToJs.AST
 
         public override string ToJs()
         {
+            var body = FindChild<BlockNode>();
+            if(body==null)
+            return string.Empty;
+
+            var stmts = body.FindChild("statements");
+            if (stmts != null)
+                return stmts.ToJs();
             return string.Empty;
         }
     }
