@@ -44,6 +44,12 @@ CanvasEngine.Graphics.GraphicDevice = function(var canvas_id){
 	var deviceReady = false;
 	var lastClearColor = "#000";
 
+	this.Foo = function()
+	{
+		for(i0;i < A.count;i ++ )
+			debug( i );
+	}
+
 	this.OnResize = function()
 	{
 	}
@@ -83,7 +89,7 @@ CanvasEngine.Graphics.GraphicDevice = function(var canvas_id){
 		deviceReady = true;
 	else
 		JsNative( "console" ).log( "Unable to initializate context 2d" );
-	
+	bindThisthis
 
 
 }

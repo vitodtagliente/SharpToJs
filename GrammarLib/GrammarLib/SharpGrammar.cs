@@ -98,7 +98,7 @@ namespace SharpToJs
 
             NonTerminal embedded_statement = new NonTerminal("embedded-statement", typeof(AST.JsNode));
             NonTerminal control_flow_statement = new NonTerminal("control-flow-statement", typeof(AST.JsNode));
-            NonTerminal declaration_statement = new NonTerminal("declaration-statement");
+            NonTerminal declaration_statement = new NonTerminal("declaration-statement", typeof(AST.DeclarationStatementNode));
             NonTerminal if_statement = new NonTerminal("if-statement", typeof(AST.IfStmtNode));
             NonTerminal else_statement = new NonTerminal("else-statement", typeof(AST.ElseStmtNode));
             NonTerminal do_statement = new NonTerminal("do-statement");
@@ -107,16 +107,16 @@ namespace SharpToJs
             NonTerminal switch_sections = new NonTerminal("switch-section");
             NonTerminal switch_section = new NonTerminal("switch-section");
             NonTerminal foreach_statement = new NonTerminal("foreach-statement");
-            NonTerminal for_statement = new NonTerminal("for-statement");
-            NonTerminal for_initializer = new NonTerminal("for-initializer");
-            NonTerminal for_condition = new NonTerminal("for-condition");
-            NonTerminal for_iterator = new NonTerminal("for-iterator");
+            NonTerminal for_statement = new NonTerminal("for-statement", typeof(AST.ForNode));
+            NonTerminal for_initializer = new NonTerminal("for-initializer", typeof(AST.JsNode));
+            NonTerminal for_condition = new NonTerminal("for-condition", typeof(AST.JsNode));
+            NonTerminal for_iterator = new NonTerminal("for-iterator", typeof(AST.JsNode));
             NonTerminal while_statement = new NonTerminal("while-statement");
             NonTerminal expression_statement = new NonTerminal("expression-statement");
             NonTerminal return_statement = new NonTerminal("return-statement", typeof(AST.ReturnStmtNode));
 
-            NonTerminal variable_declarations = new NonTerminal("variable-declarations");
-            NonTerminal variable_declaration = new NonTerminal("variable-declaration");
+            NonTerminal variable_declarations = new NonTerminal("variable-declarations", typeof(AST.JsNode));
+            NonTerminal variable_declaration = new NonTerminal("variable-declaration", typeof(AST.JsNode));
 
             NonTerminal assign_statement = new NonTerminal("assign-statement", typeof(AST.AssignmentStmtNode));
             
@@ -129,8 +129,8 @@ namespace SharpToJs
             NonTerminal primary_expression = new NonTerminal("primary-expression", typeof(AST.JsNode));
 
             NonTerminal object_creation_expression = new NonTerminal("object-creation-expression");
-            NonTerminal pre_incr_decr_expression = new NonTerminal("pre-incr-decr-expression");
-            NonTerminal post_incr_decr_expression = new NonTerminal("post-incr-decr-expression");
+            NonTerminal pre_incr_decr_expression = new NonTerminal("pre-incr-decr-expression", typeof(AST.JsNode));
+            NonTerminal post_incr_decr_expression = new NonTerminal("post-incr-decr-expression", typeof(AST.JsNode));
             NonTerminal typeof_expression = new NonTerminal("typeof-expression");
             NonTerminal unary_expression = new NonTerminal("unary-expression", typeof(AST.JsNode));
             NonTerminal member_expression = new NonTerminal("member-expression", typeof(AST.MemberExpressionNode));
@@ -336,7 +336,7 @@ namespace SharpToJs
 
             statements.Rule = MakePlusRule(statements, null, statement);
 
-            statement.Rule = declaration_statement
+            statement.Rule = declaration_statement + semi_colon
                 | embedded_statement + semi_colon
                 ;
 
@@ -380,7 +380,7 @@ namespace SharpToJs
 
             for_initializer.Rule = Empty
                 | assign_statement
-                | variable_declaration
+                | PreferShiftHere() + declaration_statement
                 ;
 
             for_condition.Rule = Empty
@@ -416,7 +416,7 @@ namespace SharpToJs
 
             // Dichiarazione di variabili
 
-            declaration_statement.Rule = qualified_type + variable_declarations + ";"
+            declaration_statement.Rule = qualified_type + variable_declarations
                 ;
 
             variable_declarations.Rule = MakePlusRule(variable_declarations, ToTerm(","), variable_declaration);

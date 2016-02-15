@@ -54,8 +54,10 @@
     <Compile Include="AST\BooleanNode.cs" />
     <Compile Include="AST\ClassNode.cs" />
     <Compile Include="AST\ConstructorNode.cs" />
+    <Compile Include="AST\DeclarationStatementNode.cs" />
     <Compile Include="AST\ElseStmtNode.cs" />
     <Compile Include="AST\FieldNode.cs" />
+    <Compile Include="AST\ForNode.cs" />
     <Compile Include="AST\FunctionArgumentsNode.cs" />
     <Compile Include="AST\GetNode.cs" />
     <Compile Include="AST\IdentifierToken.cs" />

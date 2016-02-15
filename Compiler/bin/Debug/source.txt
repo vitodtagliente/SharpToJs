@@ -48,6 +48,12 @@ namespace CanvasEngine.Graphics
             var bindThis = this;
         }
         
+        public void Foo()
+        {
+            for(int i = 0; i < A.count; i++)
+                debug(i);
+        }
+        
         public void OnResize(){}
         
         public void Resize(int width, int height)
