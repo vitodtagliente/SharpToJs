@@ -17,7 +17,8 @@ namespace SharpToJs.AST
                 if (control_flow == null && IsLeaf == false)
                     str.Append(";");
             }
-            else str.Append(";");
+            else if (FindChild<AssignmentStmtNode>() != null)
+                str.Append(";");
 
             str.AppendLine(string.Empty);
             return str.ToString();

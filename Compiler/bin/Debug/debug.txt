@@ -82,8 +82,8 @@ CanvasEngine.Graphics.GraphicDevice = function(var canvas_id){
 	if (context !=  )
 		deviceReady = true;
 	else
-		JsNative( "console" ).log( "Unable to initializate context 2d" )
-	;
+		JsNative( "console" ).log( "Unable to initializate context 2d" );
+	
 
 
 }

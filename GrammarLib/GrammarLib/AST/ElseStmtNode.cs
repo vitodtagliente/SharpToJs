@@ -19,6 +19,13 @@ namespace SharpToJs.AST
 
             Unshift();
 
+            var stmt = FindChild("embedded-statement");
+            if(stmt != null)
+            {
+                if (stmt.FindChild<BlockNode>() == null)
+                    str.Append(";");
+            }
+
             return str.ToString();
         }
     }
