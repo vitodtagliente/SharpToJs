@@ -62,6 +62,7 @@
     <Compile Include="AST\GetNode.cs" />
     <Compile Include="AST\IdentifierToken.cs" />
     <Compile Include="AST\IfStmtNode.cs" />
+    <Compile Include="AST\IncrDecrNode.cs" />
     <Compile Include="AST\KeywordNode.cs" />
     <Compile Include="AST\MemberExpressionNode.cs" />
     <Compile Include="AST\MethodNode.cs" />

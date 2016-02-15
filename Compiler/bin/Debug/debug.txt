@@ -46,7 +46,7 @@ CanvasEngine.Graphics.GraphicDevice = function(var canvas_id){
 
 	this.Foo = function()
 	{
-		for(i0;i < A.count;i ++ )
+		for(var i = 0; i < A.count; i++)
 			debug( i );
 	}
 
@@ -89,7 +89,7 @@ CanvasEngine.Graphics.GraphicDevice = function(var canvas_id){
 		deviceReady = true;
 	else
 		JsNative( "console" ).log( "Unable to initializate context 2d" );
-	bindThisthis
+	var bindThis = this;
 
 
 }

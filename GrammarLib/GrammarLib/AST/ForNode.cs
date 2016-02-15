@@ -13,13 +13,13 @@ namespace SharpToJs.AST
             if (for_initializer != null)
                 str.Append(for_initializer.ToJs());
 
-            str.Append(";");
+            str.Append(" ");
 
             var for_condition = FindChild("for-condition");
             if (for_condition != null)
                 str.Append(for_condition.ToJs());
 
-            str.Append(";");
+            str.Append("; ");
 
             var for_iterator = FindChild("for-iterator");
             if (for_iterator != null)
