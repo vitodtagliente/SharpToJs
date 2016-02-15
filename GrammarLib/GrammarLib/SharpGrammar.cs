@@ -13,8 +13,11 @@ namespace SharpToJs
             CommentTerminal blockComment = new CommentTerminal("block-comment", "/*", "*/");
             CommentTerminal lineComment = new CommentTerminal("line-comment", "//",
                 "\r", "\n", "\u2085", "\u2028", "\u2029");
+            CommentTerminal inlineJsStatement = new CommentTerminal("inline-js", "$",
+                "\r", "\n", "\u2085", "\u2028", "\u2029");
             NonGrammarTerminals.Add(blockComment);
             NonGrammarTerminals.Add(lineComment);
+            NonGrammarTerminals.Add(inlineJsStatement);
 
             Terminal numberToken = new NumberLiteral("number-token");
             numberToken.AstConfig.NodeType = typeof(AST.NumberNode);
