@@ -101,7 +101,7 @@ namespace SharpToJs
             NonTerminal declaration_statement = new NonTerminal("declaration-statement", typeof(AST.JsNode));
             NonTerminal if_statement = new NonTerminal("if-statement", typeof(AST.IfStmtNode));
             NonTerminal else_statement = new NonTerminal("else-statement", typeof(AST.ElseStmtNode));
-            NonTerminal do_statement = new NonTerminal("do-statement");
+            NonTerminal do_statement = new NonTerminal("do-statement", typeof(AST.DoNode));
             NonTerminal switch_statement = new NonTerminal("switch-statement");
             NonTerminal switch_body = new NonTerminal("switch-body");
             NonTerminal switch_sections = new NonTerminal("switch-section");
@@ -111,8 +111,7 @@ namespace SharpToJs
             NonTerminal for_initializer = new NonTerminal("for-initializer", typeof(AST.JsNode));
             NonTerminal for_condition = new NonTerminal("for-condition", typeof(AST.JsNode));
             NonTerminal for_iterator = new NonTerminal("for-iterator", typeof(AST.JsNode));
-            NonTerminal while_statement = new NonTerminal("while-statement");
-            NonTerminal expression_statement = new NonTerminal("expression-statement");
+            NonTerminal while_statement = new NonTerminal("while-statement", typeof(AST.WhileNode));
             NonTerminal return_statement = new NonTerminal("return-statement", typeof(AST.ReturnStmtNode));
 
             NonTerminal variable_declarations = new NonTerminal("variable-declarations", typeof(AST.JsNode));

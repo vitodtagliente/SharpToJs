@@ -48,6 +48,17 @@ CanvasEngine.Graphics.GraphicDevice = function(var canvas_id){
 	{
 		for(var i = 0; i < A.count; i++)
 			debug( i );
+		do
+		{
+			var i = 0;
+			i = 9 + 5;
+		}
+		while ( i < 9 );
+		while ( true )
+		{
+			i += 9;
+		}
+
 	}
 
 	this.OnResize = function()

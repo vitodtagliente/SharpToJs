@@ -55,6 +55,7 @@
     <Compile Include="AST\ClassNode.cs" />
     <Compile Include="AST\ConstructorNode.cs" />
     <Compile Include="AST\DeclarationStatementNode.cs" />
+    <Compile Include="AST\DoNode.cs" />
     <Compile Include="AST\ElseStmtNode.cs" />
     <Compile Include="AST\FieldNode.cs" />
     <Compile Include="AST\ForNode.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="AST\SymbolTable.cs" />
     <Compile Include="AST\VisibilityModifierNode.cs" />
     <Compile Include="AST\ClassBodyNode.cs" />
+    <Compile Include="AST\WhileNode.cs" />
     <Compile Include="JavascriptGenerator.cs" />
     <Content Include="SharpGrammar.backup.txt" />
     <Compile Include="SharpGrammar.cs" />
