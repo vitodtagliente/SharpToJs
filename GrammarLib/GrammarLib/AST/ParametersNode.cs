@@ -22,7 +22,6 @@ namespace SharpToJs.AST
             foreach(var p in Parameters)
             {
                 str.Append(add);
-                str.Append("var ");
                 str.Append(p);
                 add = ", ";
             }

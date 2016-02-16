@@ -19,14 +19,6 @@ namespace Compiler
             return false;
         }
 
-        public string First()
-        {
-            if (args.Length < 1) return null;
-            if (!string.IsNullOrEmpty(args[0]) && args[0].Trim() != "-")
-                return args[0];
-            return null;
-        }
-
         public string Find(string argType)
         {
             for (int i = 0; i < args.Length; i++)
@@ -40,26 +32,16 @@ namespace Compiler
             return null;
         }
 
-        public List<string> FindAll(string argType)
+        public List<string> FindAll()
         {
             List<string> list = new List<string>();
-            for (int i = 0; i < args.Length; i++)
+            foreach(var arg in args)
             {
-                if (args[i].Trim().ToLower().Equals(argType.Trim().ToLower()))
-                {
-                    int y = i + 1;
-                    while (y < args.Length && !args[y].Trim().StartsWith("-"))
-                    {
-                        list.Add(args[y]);
-                        y++;
-                    }
-
-                    if (list.Count > 0)
-                        return list;
-                    return null;
-                }
+                if (arg.StartsWith("-"))
+                    return list;
+                list.Add(arg);
             }
-            return null;
+            return list;
         }
     }
 }

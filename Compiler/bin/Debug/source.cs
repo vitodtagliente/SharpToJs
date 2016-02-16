@@ -3,7 +3,7 @@ using SharpToJs;
 
 namespace CanvasEngine.Graphics
 {   
-    public class GraphicDevice
+    public class GraphicDevice : MonoBehaviour
     {
         public JsNative canvas;
         public JsNative context;
@@ -62,6 +62,11 @@ namespace CanvasEngine.Graphics
             while(true)
             {
                 i+=9;
+            }
+            
+            foreach(int a in GetChildren())
+            {
+                a.id = 7;
             }
         }
         

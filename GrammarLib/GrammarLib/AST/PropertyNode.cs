@@ -27,9 +27,20 @@ namespace SharpToJs.AST
 
             Shift();
 
-            var body = FindChild("property-body");
-            if (body != null)
-                str.AppendLine(body.ToJs());
+            //var body = FindChild("property-body");
+            var get = FindChild<GetNode>(true);
+            var set = FindChild<SetNode>(true);
+
+            if (get != null)
+            {
+                str.Append(get.ToJs());
+                if (set.IsLeaf == false)
+                    str.Append(",");
+            }
+            if (set != null)
+            {
+                str.Append(set.ToJs());
+            }
 
             Unshift();
 

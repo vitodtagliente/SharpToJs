@@ -13,8 +13,7 @@ namespace SharpToJs
             CommentTerminal blockComment = new CommentTerminal("block-comment", "/*", "*/");
             CommentTerminal lineComment = new CommentTerminal("line-comment", "//",
                 "\r", "\n", "\u2085", "\u2028", "\u2029");
-            CommentTerminal inlineJsStatement = new CommentTerminal("inline-js", "$",
-                "\r", "\n", "\u2085", "\u2028", "\u2029");
+            CommentTerminal inlineJsStatement = new CommentTerminal("inline-js", "$js", "js$");
             NonGrammarTerminals.Add(blockComment);
             NonGrammarTerminals.Add(lineComment);
             NonGrammarTerminals.Add(inlineJsStatement);
@@ -60,8 +59,8 @@ namespace SharpToJs
             NonTerminal visibility_modifiers = new NonTerminal("visibility-modifiers", typeof(AST.VisibilityModifierNode));
             NonTerminal visibility_modifier = new NonTerminal("visibility-modifier", typeof(AST.KeywordNode));
 
-            NonTerminal class_params = new NonTerminal("class-params");
-            NonTerminal class_param = new NonTerminal("class-param");
+            NonTerminal class_params = new NonTerminal("class-params", typeof(AST.JsNode));
+            NonTerminal class_param = new NonTerminal("class-param", typeof(AST.JsNode));
 
             NonTerminal enum_elements = new NonTerminal("enum-elements");
             NonTerminal enum_element = new NonTerminal("enum-element");
@@ -109,7 +108,7 @@ namespace SharpToJs
             NonTerminal switch_body = new NonTerminal("switch-body");
             NonTerminal switch_sections = new NonTerminal("switch-section");
             NonTerminal switch_section = new NonTerminal("switch-section");
-            NonTerminal foreach_statement = new NonTerminal("foreach-statement");
+            NonTerminal foreach_statement = new NonTerminal("foreach-statement", typeof(AST.ForeachNode));
             NonTerminal for_statement = new NonTerminal("for-statement", typeof(AST.ForNode));
             NonTerminal for_initializer = new NonTerminal("for-initializer", typeof(AST.JsNode));
             NonTerminal for_condition = new NonTerminal("for-condition", typeof(AST.JsNode));
@@ -127,13 +126,13 @@ namespace SharpToJs
 
             NonTerminal conditional_expression = new NonTerminal("conditional-expression");
             NonTerminal bin_op_expression = new NonTerminal("bin-op-expression", typeof(AST.JsNode));
-            NonTerminal typecast_expression = new NonTerminal("typecast-expression");
+            NonTerminal typecast_expression = new NonTerminal("typecast-expression", typeof(AST.TypecastNode));
             NonTerminal primary_expression = new NonTerminal("primary-expression", typeof(AST.JsNode));
 
             NonTerminal object_creation_expression = new NonTerminal("object-creation-expression");
             NonTerminal pre_incr_decr_expression = new NonTerminal("pre-incr-decr-expression", typeof(AST.IncrDecrNode));
             NonTerminal post_incr_decr_expression = new NonTerminal("post-incr-decr-expression", typeof(AST.IncrDecrNode));
-            NonTerminal typeof_expression = new NonTerminal("typeof-expression");
+            NonTerminal typeof_expression = new NonTerminal("typeof-expression", typeof(AST.TypeOfNode));
             NonTerminal unary_expression = new NonTerminal("unary-expression", typeof(AST.JsNode));
             NonTerminal member_expression = new NonTerminal("member-expression", typeof(AST.MemberExpressionNode));
 
@@ -145,7 +144,7 @@ namespace SharpToJs
             NonTerminal boolean_token = new NonTerminal("boolean-token", typeof(AST.BooleanNode));
             NonTerminal object_token = new NonTerminal("object-token", typeof(AST.ObjectNode));
 
-            NonTerminal element = new NonTerminal("element", typeof(AST.JsNode));
+            NonTerminal element = new NonTerminal("element", typeof(AST.ElementNode));
             NonTerminal builtin_element = new NonTerminal("builtin-element", typeof(AST.JsNode));
 
             NonTerminal function_arguments = new NonTerminal("function-arguments", typeof(AST.FunctionArgumentsNode));
@@ -396,7 +395,7 @@ namespace SharpToJs
 
             // Foreach Statement
 
-            foreach_statement.Rule = ToTerm("foreach") + "(" + type_declaration + identifierToken + "in" + qualified_identifier + ")" + embedded_statement;
+            foreach_statement.Rule = ToTerm("foreach") + "(" + qualified_type + identifierToken + "in" + member_expression + ")" + embedded_statement;
 
             // Do Statement
 
@@ -412,7 +411,7 @@ namespace SharpToJs
 
             switch_body.Rule = MakeStarRule(switch_sections, null, switch_section);
 
-            switch_section.Rule = ToTerm("case") + expression + ":" + expression + "break" + ";"
+            switch_section.Rule = ToTerm("case") + expression + ":" + expression + ";" + "break" + ";"
                 | ToTerm("default") + ":" + expression + "break" + ";"
                 ;
 

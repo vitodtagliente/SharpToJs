@@ -4,9 +4,10 @@
  * Author: Vito Domenico Tagliente
  */
 
-var CanvasEngine.Graphics = CanvasEngine.Graphics || {};
+var CanvasEngine = CanvasEngine || {};
+CanvasEngine.Graphics = CanvasEngine.Graphics || {};
 
-CanvasEngine.Graphics.GraphicDevice = function(var canvas_id){
+CanvasEngine.Graphics.GraphicDevice = function(canvas_id){
 
 	this.canvas;
 	this.context;
@@ -17,13 +18,12 @@ CanvasEngine.Graphics.GraphicDevice = function(var canvas_id){
 		{
 			return fullscreen;
 		}
-		set: function( value )
+,		set: function( value )
 		{
 			fullscreen = value;
-			if (fullscreen )
+			if ( fullscreen )
 				Resize( 0, 0, JsNative( "window" ).innerWidth, JsNative( "window" ).innerHeight );
 		}
-
 	} );
 
 	Object.defineProperty( this, 'Width', {
@@ -31,7 +31,6 @@ CanvasEngine.Graphics.GraphicDevice = function(var canvas_id){
 		{
 			return canvas.width;
 		}
-
 	} );
 
 	Object.defineProperty( this, 'Heigth', {
@@ -39,7 +38,6 @@ CanvasEngine.Graphics.GraphicDevice = function(var canvas_id){
 		{
 			return canvas.height;
 		}
-
 	} );
 	var deviceReady = false;
 	var lastClearColor = "#000";
@@ -59,13 +57,18 @@ CanvasEngine.Graphics.GraphicDevice = function(var canvas_id){
 			i += 9;
 		}
 
+		for ( var a in GetChildren(  ) )
+		{
+			a.id = 7;
+		}
+
 	}
 
 	this.OnResize = function()
 	{
 	}
 
-	this.Resize = function(var width, var height)
+	this.Resize = function(width, height)
 	{
 		canvas.width = width;
 		canvas.heigth = height;
@@ -76,9 +79,9 @@ CanvasEngine.Graphics.GraphicDevice = function(var canvas_id){
 		Clear( lastClearColor );
 	}
 
-	this.Clear = function(var color)
+	this.Clear = function(color)
 	{
-		if (deviceReady )
+		if ( deviceReady )
 		{
 			lastClearColor = color;
 			context.fillStyle = lastClearColor;
@@ -90,13 +93,13 @@ CanvasEngine.Graphics.GraphicDevice = function(var canvas_id){
 	// Constructor
 
 	canvas = JsNative( "document" ).getElementById( canvas_id );
-	if (canvas !=  )
+	if ( canvas != null )
 	{
 		context = canvas.getContext( "2d" );
 		fullscreen = false;
 	}
 
-	if (context !=  )
+	if ( context != null )
 		deviceReady = true;
 	else
 		JsNative( "console" ).log( "Unable to initializate context 2d" );
@@ -105,5 +108,6 @@ CanvasEngine.Graphics.GraphicDevice = function(var canvas_id){
 
 }
 
+CanvasEngine.Graphics.GraphicDevice.prototype = new MonoBehaviour();
 
 

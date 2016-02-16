@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using SharpToJs;
 using System.Text;
@@ -13,46 +14,93 @@ namespace Compiler
 
             var argManager = new ArgManager(args);
 
-            string filename = "source.txt";
-            string source = File.ReadAllText(filename);
+            List<string> Files = new List<string>();
+            List<string> Scripts = new List<string>();
 
-            JavascriptGenerator compiler = new JavascriptGenerator(new SharpGrammar());
-            if (compiler.Parse(source) == false)
+            string output_dir = string.Empty;
+            if (argManager.Find("-o") != null)
+                output_dir = argManager.Find("-o");
+
+            foreach(var arg in argManager.FindAll())
             {
-                Console.WriteLine(compiler.Errors);
-                Console.WriteLine(compiler.AbstractSyntaxTree.Errors);
-                return;
+                if (File.Exists(arg) || Directory.Exists(arg))
+                {
+                    var attr = File.GetAttributes(arg);
+                    if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
+                    {
+                        // is folder
+                        Files.AddRange(Directory.GetFiles(arg, "*.cs", SearchOption.AllDirectories));
+                    }
+                    else
+                    {
+                        // is file
+                        Files.Add(arg);
+                    }
+                }
+                else Console.WriteLine("Argument exception: " + arg);
             }
 
-            string output = compiler.Compile();
-            Console.WriteLine(output);
+            JavascriptGenerator compiler = new JavascriptGenerator(new SharpGrammar());
 
-            var pieces = filename.Split('.');
-            string out_filename = pieces[0] + ".js";
+            foreach (var filename in Files)
+            {
+                Console.WriteLine("Compiling file: " + filename);
 
-            StreamWriter wr = new StreamWriter(out_filename);
-            wr.Write(output);
-            wr.Close();
-            wr.Dispose();
+                string source = File.ReadAllText(filename);
 
-            if(argManager.Contains("-d") == false)
+                if (compiler.Parse(source) == false)
+                {
+                    Console.WriteLine(compiler.Errors);
+                    Console.WriteLine(compiler.AbstractSyntaxTree.Errors);
+                    break;
+                }
+
+                string output = compiler.Compile();
+                Console.WriteLine("Compile output:");
+                Console.WriteLine(output);
+
+                string out_filename = filename.Replace(".cs", ".js");
+                if(string.IsNullOrEmpty(output_dir) == false)
+                {
+                    if (Directory.Exists(output_dir) == false)
+                        Directory.CreateDirectory(output_dir);
+                    out_filename = output_dir.Trim('/') + "/" + Path.GetFileName(out_filename);
+                }
+                Scripts.Add(out_filename);
+
+                StreamWriter wr = new StreamWriter(out_filename);
+                wr.Write(output);
+                wr.Close();
+                wr.Dispose();
+            }            
+
+            if(argManager.Contains("-d") == true)
             {
                 StringBuilder str = new StringBuilder();
                 str.AppendLine("<html>");
                 str.AppendLine("\t<title>SharpToJs Debug</title>");
-                str.AppendLine("<script type = 'text/javascript' src = '" + out_filename + "'></script>");
-                str.AppendLine("<body");
+                foreach(var script in Scripts)
+                {
+                    str.AppendLine("<script type = 'text/javascript' src = '" + Path.GetFileName(script) + "'></script>");
+                }
+                str.AppendLine("<body>");
 
                 str.AppendLine("</body>");
                 str.AppendLine("</html>");
 
-                var out_file = new StreamWriter("index.html");
+                string output_filename = "index.html";
+                if (string.IsNullOrEmpty(output_dir) == false)
+                {
+                    output_filename = output_dir.Trim('/') + "/index.html";
+                }
+
+                var out_file = new StreamWriter(output_filename);
                 out_file.Write(str.ToString());
                 out_file.Close();
                 out_file.Dispose();
-            }
 
-            Console.ReadKey();
+                Console.ReadKey();
+            }
         }
     }
 }

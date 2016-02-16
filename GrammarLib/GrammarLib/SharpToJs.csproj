@@ -56,8 +56,10 @@
     <Compile Include="AST\ConstructorNode.cs" />
     <Compile Include="AST\DeclarationStatementNode.cs" />
     <Compile Include="AST\DoNode.cs" />
+    <Compile Include="AST\ElementNode.cs" />
     <Compile Include="AST\ElseStmtNode.cs" />
     <Compile Include="AST\FieldNode.cs" />
+    <Compile Include="AST\ForeachNode.cs" />
     <Compile Include="AST\ForNode.cs" />
     <Compile Include="AST\FunctionArgumentsNode.cs" />
     <Compile Include="AST\GetNode.cs" />
@@ -82,6 +84,8 @@
     <Compile Include="AST\StatementNode.cs" />
     <Compile Include="AST\StringNode.cs" />
     <Compile Include="AST\SymbolTable.cs" />
+    <Compile Include="AST\TypecastNode.cs" />
+    <Compile Include="AST\TypeOfNode.cs" />
     <Compile Include="AST\VisibilityModifierNode.cs" />
     <Compile Include="AST\ClassBodyNode.cs" />
     <Compile Include="AST\WhileNode.cs" />

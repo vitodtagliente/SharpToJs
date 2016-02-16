@@ -7,7 +7,7 @@ namespace SharpToJs.AST
         public override string ToJs()
         {
             StringBuilder str = new StringBuilder();
-            str.Append("if (");
+            str.Append("if ( ");
 
             var expression = FindChild("expression");
             if (expression != null)

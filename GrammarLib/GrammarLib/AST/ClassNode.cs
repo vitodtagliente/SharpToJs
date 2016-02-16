@@ -56,6 +56,20 @@ namespace SharpToJs.AST
 
             // inserisco lestensione
 
+            var class_params = FindChild("class-params");
+            if(class_params.IsLeaf == false)
+            {
+                var param = class_params.FindChild("class-param");
+
+                str.Append(AST.Table.Last.Name);
+                str.Append(".");
+                str.Append(Name);
+                str.Append(".prototype = new ");
+                str.Append(param.ToJs());
+                str.Append("();");
+                str.AppendLine(string.Empty);
+            }
+
             return str.ToString();
         }
     }
