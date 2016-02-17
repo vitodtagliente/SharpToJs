@@ -16,6 +16,8 @@ namespace SharpToJs.AST
 
     public class SymbolTable : Stack<Symbol>
     {
+        public List<string> PublicMembers = new List<string>();
+ 
         public bool Empty
         {
             get { return Count == 0; }

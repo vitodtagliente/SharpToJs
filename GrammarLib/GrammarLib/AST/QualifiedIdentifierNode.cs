@@ -17,7 +17,17 @@ namespace SharpToJs.AST
 
         public override string ToJs()
         {
-            return Value;
+            if (Value.StartsWith("this."))
+                return Value;
+            string before = string.Empty;
+            foreach(var member in AST.Table.PublicMembers)
+            {
+                var pieces = Value.Split('.');
+
+                if (member.Equals(pieces[0]))
+                    before = "this.";
+            }
+            return (before + Value);
         }
     }
 }

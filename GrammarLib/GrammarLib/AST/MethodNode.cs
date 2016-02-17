@@ -13,6 +13,9 @@ namespace SharpToJs.AST
             modifiers = FindChild<VisibilityModifierNode>();
             id = FindChild<IdentifierToken>();
             parameters = FindChild<ParametersNode>();
+
+            if (modifiers.IsPublic)
+                AST.Table.PublicMembers.Add(id.Value);
         }
 
         public override string ToJs()

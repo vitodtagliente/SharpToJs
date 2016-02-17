@@ -12,6 +12,7 @@ namespace Compiler
         {
             Console.Title = "SharpToJs Compiler";
 
+            //var argManager = new ArgManager(new string[] { "source.cs", "-d" });
             var argManager = new ArgManager(args);
 
             List<string> Files = new List<string>();
@@ -84,7 +85,7 @@ namespace Compiler
                     str.AppendLine("<script type = 'text/javascript' src = '" + Path.GetFileName(script) + "'></script>");
                 }
                 str.AppendLine("<body>");
-
+                str.AppendLine("\t<canvas id='game_space'></canvas>");
                 str.AppendLine("</body>");
                 str.AppendLine("</html>");
 

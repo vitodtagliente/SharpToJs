@@ -10,11 +10,11 @@ namespace SharpToJs.AST
         public override void SetBehaviour()
         {
             modifiers = FindChild<VisibilityModifierNode>();
-            if (modifiers != null)
-                modifiers.Remove();
             id = FindChild<IdentifierToken>();
-            if (id != null)
-                id.Remove();
+
+            if (modifiers.IsPublic)
+                AST.Table.PublicMembers.Add(id.ToJs());
+            
         }
 
         public override string ToJs()
@@ -27,7 +27,7 @@ namespace SharpToJs.AST
             if (FindSymbolInChildren("="))
             {
                 str.Append(" = ");
-                str.Append(base.ToJs());
+                str.Append(FindChild("primary-expression").ToJs());
             }
 
             str.Append(";");

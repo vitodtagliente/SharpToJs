@@ -15,6 +15,8 @@ namespace SharpToJs.AST
             {
                 Name = id.Value;
             }
+
+            AST.Table.PublicMembers.Add(Name);
         }
 
         public override string ToJs()

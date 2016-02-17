@@ -4,6 +4,10 @@ namespace SharpToJs.AST
     public class VisibilityModifierNode : JsNode
     {
         public string Value { get; private set; }
+        bool is_public = false;
+        public bool IsPublic {
+            get { return is_public; }
+        }
 
         public override void SetBehaviour()
         {
@@ -18,7 +22,7 @@ namespace SharpToJs.AST
                 comma = " ";
             }
 
-            if(value.Contains("public") && value.Contains("private"))
+            if (value.Contains("public") && value.Contains("private"))
             {
                 AST.Errors = ("Semanthic Error: cant use both public and private modifiers");
             }
@@ -28,7 +32,10 @@ namespace SharpToJs.AST
                 Value = "var ";
             }
             else if (value.Contains("public"))
+            {
                 Value = "this.";
+                is_public = true;
+            }
         }
 
         public override string ToJs()
