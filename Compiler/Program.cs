@@ -12,8 +12,8 @@ namespace Compiler
         {
             Console.Title = "SharpToJs Compiler";
 
-            //var argManager = new ArgManager(new string[] { "source.cs", "-d" });
-            var argManager = new ArgManager(args);
+            var argManager = new ArgManager(new string[] { "source.cs", "-d" });
+            //var argManager = new ArgManager(args);
 
             List<string> Files = new List<string>();
             List<string> Scripts = new List<string>();
@@ -82,10 +82,19 @@ namespace Compiler
                 str.AppendLine("\t<title>SharpToJs Debug</title>");
                 foreach(var script in Scripts)
                 {
-                    str.AppendLine("<script type = 'text/javascript' src = '" + Path.GetFileName(script) + "'></script>");
+                    str.AppendLine("\t<script type = 'text/javascript' src = '" + Path.GetFileName(script) + "'></script>");
                 }
                 str.AppendLine("<body>");
                 str.AppendLine("\t<canvas id='game_space'></canvas>");
+
+                var main = SharpToJs.AST.MainNode.singleton;
+                if (main != null)
+                {
+                    str.AppendLine("<script>");
+                    str.AppendLine(main.ToScript());
+                    str.AppendLine("</script>");
+                }
+
                 str.AppendLine("</body>");
                 str.AppendLine("</html>");
 
@@ -99,6 +108,9 @@ namespace Compiler
                 out_file.Write(str.ToString());
                 out_file.Close();
                 out_file.Dispose();
+
+                Console.WriteLine("Debug: " + output_filename);
+                Console.WriteLine(str.ToString());
 
                 Console.ReadKey();
             }

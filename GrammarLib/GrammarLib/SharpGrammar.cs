@@ -78,6 +78,7 @@ namespace SharpToJs
             NonTerminal constructor_declaration = new NonTerminal("constructor-declaration", typeof(AST.ConstructorNode));
             NonTerminal method_declaration = new NonTerminal("method-declaration", typeof(AST.MethodNode));
             NonTerminal property_declaration = new NonTerminal("property-declaration", typeof(AST.PropertyNode));
+            NonTerminal main_declaration = new NonTerminal("main-declaration", typeof(AST.MainNode));
 
             NonTerminal method_parameters = new NonTerminal("method-parameters", typeof(AST.JsNode));
             NonTerminal parameters = new NonTerminal("parameters", typeof(AST.ParametersNode));
@@ -159,7 +160,7 @@ namespace SharpToJs
                 "return",
                 "int", "string", "float", "void", "double", "long",
                 "if", "do", "while", "for", "switch", "case", "break", 
-                "using"
+                "using", "else"
                 //, "this", "base"
                 );
 
@@ -236,6 +237,7 @@ namespace SharpToJs
                 | constructor_declaration
                 | method_declaration
                 | property_declaration
+                | main_declaration
                 ;
 
             member_declaration.ErrorRule = SyntaxError + ";"
@@ -312,6 +314,10 @@ namespace SharpToJs
             block.Rule = ToTerm("{") + "}"
                 | "{" + statements + "}"
                 ;
+
+            // Dichirazione Main
+
+            main_declaration.Rule = ToTerm("static") + "void" + "Main" + "(" + "string" + "args" + "[" + "]" + ")" + block;
 
             // Dichiarazione Proprietà
 

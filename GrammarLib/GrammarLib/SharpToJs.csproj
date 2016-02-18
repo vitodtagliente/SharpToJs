@@ -67,6 +67,7 @@
     <Compile Include="AST\IfStmtNode.cs" />
     <Compile Include="AST\IncrDecrNode.cs" />
     <Compile Include="AST\KeywordNode.cs" />
+    <Compile Include="AST\MainNode.cs" />
     <Compile Include="AST\MemberExpressionNode.cs" />
     <Compile Include="AST\MethodNode.cs" />
     <Compile Include="AST\NumberNode.cs" />

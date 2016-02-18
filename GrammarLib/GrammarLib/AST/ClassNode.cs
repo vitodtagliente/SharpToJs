@@ -71,6 +71,8 @@ namespace SharpToJs.AST
                 str.AppendLine(string.Empty);
             }
 
+            AST.Table.PublicMembers.Clear();
+
             return str.ToString();
         }
     }

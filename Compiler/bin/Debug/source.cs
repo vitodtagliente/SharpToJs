@@ -8,6 +8,11 @@ namespace CanvasEngine.Graphics
         public JsNative canvas = null;
         public JsNative context = null;
         
+		static void Main(string args[]){
+            int a  = 8;
+            a.ToGG();
+        }
+				
         bool fullscreen = false;
         public bool Fullscreen
         {   
