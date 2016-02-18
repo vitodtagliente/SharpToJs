@@ -9,12 +9,15 @@ namespace SharpToJs.AST
             StringBuilder str = new StringBuilder();
             str.Append("var ");
 
-            str.Append(FindChild<IdentifierToken>().ToJs());
+            var stmts = FindChild("variable-declarations");
+            var stmt = stmts.FindChild("variable-declaration");
 
-            if(FindSymbolInChildren("="))
+            str.Append(stmt.FindChild<IdentifierToken>().ToJs());
+
+            if(stmt.FindSymbolInChildren("="))
             {
                 str.Append(" = ");
-                var expression = FindChild("expressions");
+                var expression = stmt.FindChild("expressions");
                 str.Append(expression.ToJs());
             }
 

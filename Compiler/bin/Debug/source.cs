@@ -8,11 +8,14 @@ namespace CanvasEngine.Graphics
         public JsNative canvas = null;
         public JsNative context = null;
         
-		static void Main(string args[]){
-            int a  = 8;
-            a.ToGG();
+        static void Main(string args[]){
+            document.body.innerHTML += "<canvas id='game_canvas'></canvas>";
+			
+			GraphicDevice device = new CanvasEngine.Graphics.GraphicDevice("game_canvas");
+			device.Fullscreen = true;
+			device.Clear("cyan");
         }
-				
+        
         bool fullscreen = false;
         public bool Fullscreen
         {   
@@ -52,7 +55,7 @@ namespace CanvasEngine.Graphics
             
             var bindThis = this;
         }
-		
+        
         public void OnResize(){}
         
         public void Resize(int width, int height)
@@ -61,12 +64,23 @@ namespace CanvasEngine.Graphics
             canvas.heigth = height;
         }
         
+        public void Test()
+        {
+            if(true)
+            {
+                if(true)
+                    if(8 > 9)
+                        echo(true);
+            }
+            else canvas.check();
+        }
+        
         public void Clear(string color)
         {
             if(deviceReady)
             {
-				if(color != null)
-					lastClearColor = color;
+                if(color != null)
+                    lastClearColor = color;
                 context.fillStyle = lastClearColor;
                 context.fillRect(0, 0, Width, Height);
             }

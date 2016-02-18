@@ -52,6 +52,19 @@ CanvasEngine.Graphics.GraphicDevice = function(canvas_id){
 		this.canvas.heigth = height;
 	}
 
+	this.Test = function()
+	{
+		if ( true )
+		{
+			if ( true )
+				if ( 8 > 9 )
+					echo( true );;
+		}
+
+		else
+			this.canvas.check(  );
+	}
+
 	this.Clear = function(color)
 	{
 		if ( deviceReady )

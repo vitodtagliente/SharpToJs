@@ -2,12 +2,12 @@
 	<title>SharpToJs Debug</title>
 	<script type = 'text/javascript' src = 'source.js'></script>
 <body>
-	<canvas id='game_space'></canvas>
 <script>
-{
-	var a = 8;
-	a.ToGG(  );
-}
+
+	document.body.innerHTML += "<canvas id='game_canvas'></canvas>";
+	var device = new CanvasEngine.Graphics.GraphicDevice( "game_canvas" );
+	device.Fullscreen = true;
+	device.Clear( "cyan" );
 
 </script>
 </body>

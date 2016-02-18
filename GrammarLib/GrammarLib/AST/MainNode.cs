@@ -21,7 +21,7 @@ namespace SharpToJs.AST
 
         public string ToScript()
         {
-            return base.ToJs();
+            return base.ToJs().Trim().Trim('{').Trim('}');
         }
 
         public override string ToJs()

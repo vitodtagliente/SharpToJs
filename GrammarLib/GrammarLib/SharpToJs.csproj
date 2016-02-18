@@ -71,6 +71,7 @@
     <Compile Include="AST\MemberExpressionNode.cs" />
     <Compile Include="AST\MethodNode.cs" />
     <Compile Include="AST\NumberNode.cs" />
+    <Compile Include="AST\ObjectCreationNode.cs" />
     <Compile Include="AST\ObjectNode.cs" />
     <Compile Include="AST\OperatorNode.cs" />
     <Compile Include="AST\ParametersNode.cs" />

@@ -85,7 +85,6 @@ namespace Compiler
                     str.AppendLine("\t<script type = 'text/javascript' src = '" + Path.GetFileName(script) + "'></script>");
                 }
                 str.AppendLine("<body>");
-                str.AppendLine("\t<canvas id='game_space'></canvas>");
 
                 var main = SharpToJs.AST.MainNode.singleton;
                 if (main != null)

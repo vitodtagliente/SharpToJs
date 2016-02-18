@@ -101,7 +101,7 @@ namespace SharpToJs
 
             NonTerminal embedded_statement = new NonTerminal("embedded-statement", typeof(AST.JsNode));
             NonTerminal control_flow_statement = new NonTerminal("control-flow-statement", typeof(AST.JsNode));
-            NonTerminal declaration_statement = new NonTerminal("declaration-statement", typeof(AST.JsNode));
+            NonTerminal declaration_statement = new NonTerminal("declaration-statement", typeof(AST.DeclarationStatementNode));
             NonTerminal if_statement = new NonTerminal("if-statement", typeof(AST.IfStmtNode));
             NonTerminal else_statement = new NonTerminal("else-statement", typeof(AST.ElseStmtNode));
             NonTerminal do_statement = new NonTerminal("do-statement", typeof(AST.DoNode));
@@ -118,7 +118,7 @@ namespace SharpToJs
             NonTerminal return_statement = new NonTerminal("return-statement", typeof(AST.ReturnStmtNode));
 
             NonTerminal variable_declarations = new NonTerminal("variable-declarations", typeof(AST.JsNode));
-            NonTerminal variable_declaration = new NonTerminal("variable-declaration", typeof(AST.DeclarationStatementNode));
+            NonTerminal variable_declaration = new NonTerminal("variable-declaration", typeof(AST.JsNode));
 
             NonTerminal assign_statement = new NonTerminal("assign-statement", typeof(AST.AssignmentStmtNode));
             
@@ -130,7 +130,7 @@ namespace SharpToJs
             NonTerminal typecast_expression = new NonTerminal("typecast-expression", typeof(AST.TypecastNode));
             NonTerminal primary_expression = new NonTerminal("primary-expression", typeof(AST.JsNode));
 
-            NonTerminal object_creation_expression = new NonTerminal("object-creation-expression");
+            NonTerminal object_creation_expression = new NonTerminal("object-creation-expression", typeof(AST.ObjectCreationNode));
             NonTerminal pre_incr_decr_expression = new NonTerminal("pre-incr-decr-expression", typeof(AST.IncrDecrNode));
             NonTerminal post_incr_decr_expression = new NonTerminal("post-incr-decr-expression", typeof(AST.IncrDecrNode));
             NonTerminal typeof_expression = new NonTerminal("typeof-expression", typeof(AST.TypeOfNode));
@@ -375,10 +375,10 @@ namespace SharpToJs
 
             // If Statement
 
-            if_statement.Rule = ToTerm("if") + "(" + expression + ")" + embedded_statement + else_statement;
+            if_statement.Rule = ToTerm("if") + "(" + expression + ")" + embedded_statement  + semi_colon + else_statement;
 
             else_statement.Rule = Empty
-                | PreferShiftHere() + "else" + embedded_statement
+                | PreferShiftHere() + "else" + embedded_statement + semi_colon
                 ;
 
             // For Statement
