@@ -14,14 +14,22 @@ namespace SharpToJs.AST
             id = FindChild<IdentifierToken>();
             parameters = FindChild<ParametersNode>();
 
+            Check();
+        }
+
+        public override void Check()
+        {
+            var symbol = new ST.Symbol(id.ToJs(), "method");
             if (modifiers.IsPublic)
-                AST.Table.PublicMembers.Add(id.Value);
+                symbol.SetPublic();
+            symbol.Parent = AST.Table.CurrentClass.Name;
+            AST.Table.Elements.Add(symbol);
         }
 
         public override string ToJs()
         {
             StringBuilder str = new StringBuilder();
-            
+
             str.AppendLine(string.Empty);
             str.Append(Tab);
             str.Append(modifiers.Value);

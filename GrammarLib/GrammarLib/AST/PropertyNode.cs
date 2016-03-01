@@ -6,9 +6,10 @@ namespace SharpToJs.AST
     {
         public string Name { get; private set; }
         IdentifierToken id;
+        VisibilityModifierNode modifiers;
 
         public override void SetBehaviour()
-        {
+        {            
             id = FindChild<IdentifierToken>();
             Name = string.Empty;
             if (id != null)
@@ -16,12 +17,23 @@ namespace SharpToJs.AST
                 Name = id.Value;
             }
 
-            AST.Table.PublicMembers.Add(Name);
+            Check();
+        }
+
+        public override void Check()
+        {
+            modifiers = FindChild<VisibilityModifierNode>();
+            var symbol = new ST.Symbol(Name, "property");
+            if (modifiers.IsPublic)
+                symbol.SetPublic();
+            symbol.Parent = AST.Table.CurrentClass.Name;
+            AST.Table.Elements.Add(symbol);
         }
 
         public override string ToJs()
         {
             StringBuilder str = new StringBuilder();
+
             str.AppendLine(string.Empty);
             str.Append(Tab);
             str.Append("Object.defineProperty( this, '" + id.Value + "', {");

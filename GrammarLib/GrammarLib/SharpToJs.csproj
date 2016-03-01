@@ -85,7 +85,9 @@
     <Compile Include="AST\SetNode.cs" />
     <Compile Include="AST\StatementNode.cs" />
     <Compile Include="AST\StringNode.cs" />
-    <Compile Include="AST\SymbolTable.cs" />
+    <Compile Include="ST\Symbol.cs" />
+    <Compile Include="ST\SymbolStack.cs" />
+    <Compile Include="ST\SymbolTable.cs" />
     <Compile Include="AST\TypecastNode.cs" />
     <Compile Include="AST\TypeOfNode.cs" />
     <Compile Include="AST\VisibilityModifierNode.cs" />

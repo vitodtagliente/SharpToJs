@@ -15,7 +15,7 @@ namespace CanvasEngine.Graphics
 			device.Fullscreen = true;
 			device.Clear("cyan");
         }
-        
+				        
         bool fullscreen = false;
         public bool Fullscreen
         {   
@@ -61,7 +61,7 @@ namespace CanvasEngine.Graphics
         public void Resize(int width, int height)
         {
             canvas.width = width;
-            canvas.heigth = height;
+            canvas.height = height;
         }
         
         public void Test()

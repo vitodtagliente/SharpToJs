@@ -8,26 +8,20 @@ namespace SharpToJs.AST
         static List<string> Namespaces = new List<string>();
 
         public string Name { get; private set; }
-        
+
         public override void SetBehaviour()
-        {            
-            foreach(var child in Children)
-            {
-                if (child.GetType() == typeof(QualifiedIdentifierNode))
-                {
-                    Name = ((QualifiedIdentifierNode)child).Value;
+        {
+            var id = FindChild<QualifiedIdentifierNode>();
+            Name = id.Value;
 
-                    AST.Table.Push(new Symbol(Name, "namespace"));
-
-                    Children.Remove(child);
-                    break;
-                }
-            }
+            Children.Remove(id);
         }
 
         public override string ToJs()
         {
             StringBuilder str = new StringBuilder();
+
+            AST.Table.PushNamespace(Name);
 
             string current_namespace = string.Empty;
             var pieces = Name.Split('.');
@@ -43,7 +37,7 @@ namespace SharpToJs.AST
 
             str.AppendLine(base.ToJs());
 
-            AST.Table.Pop();
+            AST.Table.PopNamespace();
 
             return str.ToString();
         }

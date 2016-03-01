@@ -17,15 +17,18 @@ namespace SharpToJs.AST
 
         public override string ToJs()
         {
-            if (Value.StartsWith("this."))
+            if (Value.StartsWith("this.") || AST.Table.CurrentClass == null)
                 return Value;
             string before = string.Empty;
-            foreach(var member in AST.Table.PublicMembers)
-            {
-                var pieces = Value.Split('.');
 
-                if (member.Equals(pieces[0]))
+            var pieces = Value.Split('.');
+            foreach (var member in AST.Table.FindClassElements(AST.Table.CurrentClass.Name))
+            {
+                if (member.Name.Equals(pieces[0]) && member.IsPublic)
+                {
                     before = "this.";
+                    break;
+                }
             }
             return (before + Value);
         }

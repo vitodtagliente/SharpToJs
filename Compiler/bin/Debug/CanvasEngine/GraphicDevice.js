@@ -49,7 +49,7 @@ CanvasEngine.Graphics.GraphicDevice = function(canvas_id){
 	this.Resize = function(width, height)
 	{
 		this.canvas.width = width;
-		this.canvas.heigth = height;
+		this.canvas.height = height;
 	}
 
 	this.Clear = function(color)

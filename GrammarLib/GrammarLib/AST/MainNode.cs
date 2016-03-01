@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace SharpToJs.AST
 {
     public class MainNode : JsNode
@@ -8,18 +7,18 @@ namespace SharpToJs.AST
 
         public override void AfterInit()
         {
-            if(singleton == null)
+            if (singleton == null)
             {
                 singleton = this;
             }
             else
             {
-                AST.Errors = ("Cannot exist 2 main functions");
-                new Exception();
+                AST.Errors = ("Cannot exist 2 Main functions");
+                AST.Errors = string.Format("Semantic Error on " + ToPosition());
             }
         }
 
-        public string ToScript()
+        public string Compile()
         {
             return base.ToJs().Trim().Trim('{').Trim('}');
         }

@@ -22,7 +22,7 @@ namespace Compiler
             if (argManager.Find("-o") != null)
                 output_dir = argManager.Find("-o");
 
-            foreach(var arg in argManager.FindAll())
+            foreach (var arg in argManager.FindAll())
             {
                 if (File.Exists(arg) || Directory.Exists(arg))
                 {
@@ -43,6 +43,8 @@ namespace Compiler
 
             JavascriptGenerator compiler = new JavascriptGenerator(new SharpGrammar());
 
+            bool thereIsError = false;
+
             foreach (var filename in Files)
             {
                 Console.WriteLine("Compiling file: " + filename);
@@ -53,15 +55,17 @@ namespace Compiler
                 {
                     Console.WriteLine(compiler.Errors);
                     Console.WriteLine(compiler.AbstractSyntaxTree.Errors);
+                    thereIsError = true;
                     break;
                 }
 
                 string output = compiler.Compile();
-                Console.WriteLine("Compile output:");
+
+                Console.WriteLine("Compiled output:");
                 Console.WriteLine(output);
 
                 string out_filename = filename.Replace(".cs", ".js");
-                if(string.IsNullOrEmpty(output_dir) == false)
+                if (string.IsNullOrEmpty(output_dir) == false)
                 {
                     if (Directory.Exists(output_dir) == false)
                         Directory.CreateDirectory(output_dir);
@@ -73,24 +77,27 @@ namespace Compiler
                 wr.Write(output);
                 wr.Close();
                 wr.Dispose();
-            }            
+            }
 
-            if(argManager.Contains("-d") == true)
+            if (argManager.Contains("-d") == true && thereIsError == false)
             {
                 StringBuilder str = new StringBuilder();
                 str.AppendLine("<html>");
                 str.AppendLine("\t<title>SharpToJs Debug</title>");
-                foreach(var script in Scripts)
+                foreach (var script in Scripts)
                 {
                     str.AppendLine("\t<script type = 'text/javascript' src = '" + Path.GetFileName(script) + "'></script>");
                 }
+                str.AppendLine("\t<style>");
+                str.AppendLine("\t\tbody, html { margin:0; padding:0; border:0; }");
+                str.AppendLine("\t</style>");
                 str.AppendLine("<body>");
 
                 var main = SharpToJs.AST.MainNode.singleton;
                 if (main != null)
                 {
                     str.AppendLine("<script>");
-                    str.AppendLine(main.ToScript());
+                    str.AppendLine(main.Compile());
                     str.AppendLine("</script>");
                 }
 
@@ -110,9 +117,10 @@ namespace Compiler
 
                 Console.WriteLine("Debug: " + output_filename);
                 Console.WriteLine(str.ToString());
-
-                Console.ReadKey();
             }
+
+            if (argManager.Contains("-d"))
+                Console.ReadKey();
         }
     }
 }

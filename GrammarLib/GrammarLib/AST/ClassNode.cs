@@ -7,7 +7,12 @@ namespace SharpToJs.AST
     {
         public ConstructorNode Constructor { get; private set; }
         public string Name { get; private set; }
-        
+
+        public override void AfterInit()
+        {
+            Check();
+        }
+
         public override void SetBehaviour()
         {
             Constructor = FindChild<ConstructorNode>();
@@ -20,12 +25,17 @@ namespace SharpToJs.AST
                 Name = identifier.Value;
         }
 
+        public override void Check()
+        {
+            AST.Table.PushClass(Name, string.Empty);
+        }
+
         public override string ToJs()
         {
             StringBuilder str = new StringBuilder();
             
             str.AppendLine(string.Empty);
-            str.Append(AST.Table.Last.Name);
+            str.Append(AST.Table.CurrentNamespace.Name);
             str.Append(".");
             str.Append(Name);
             str.Append(" = function(");
@@ -62,7 +72,7 @@ namespace SharpToJs.AST
             {
                 var param = class_params.FindChild("class-param");
 
-                str.Append(AST.Table.Last.Name);
+                str.Append(AST.Table.CurrentClass.Name);
                 str.Append(".");
                 str.Append(Name);
                 str.Append(".prototype = new ");
@@ -71,8 +81,8 @@ namespace SharpToJs.AST
                 str.AppendLine(string.Empty);
             }
 
-            AST.Table.PublicMembers.Clear();
-
+            AST.Table.PopClass();
+            
             return str.ToString();
         }
     }

@@ -36,7 +36,6 @@ namespace SharpToJs.AST
         {
             Label = node.Term.Name;
             Context = node;
-            AfterInit();
         }
 
         public virtual void AfterInit()
@@ -61,8 +60,14 @@ namespace SharpToJs.AST
 
                 ((JsNode)node).Parent = this;
                 ((JsNode)node).AST = AST;
+                ((JsNode)node).AfterInit();
                 ((JsNode)node).Parse();
             }
+        }
+
+        public virtual void Check()
+        {
+
         }
 
         public void Remove()
@@ -158,6 +163,13 @@ namespace SharpToJs.AST
             }
 
             return list;
+        }
+
+        public string ToPosition()
+        {
+            return string.Format("Line: \"{0}\", Column: \"{1}\", Position: \"{2}\" ",
+                    Context.Span.Location.Line, Context.Span.Location.Column, Context.Span.Location.Position
+                    );
         }
     }
 }
