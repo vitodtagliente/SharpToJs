@@ -92,7 +92,7 @@ namespace SharpToJs
             NonTerminal property_set = new NonTerminal("property-set", typeof(AST.SetNode));
             NonTerminal property_get = new NonTerminal("property-get", typeof(AST.GetNode));
 
-            NonTerminal builtin_type = new NonTerminal("builtin-type", typeof(AST.JsNode));
+            NonTerminal builtin_type = new NonTerminal("builtin-type", typeof(AST.KeywordNode));
             NonTerminal builtin_type_or_void = new NonTerminal("builtin-type-or-void", typeof(AST.JsNode));
             NonTerminal qualified_type = new NonTerminal("qualified-type", typeof(AST.JsNode));
 

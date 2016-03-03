@@ -7,7 +7,7 @@ namespace SharpToJs.ST
         public string Type;
         public string Category { get; private set; }
         public string Modifier;
-        public string Parent;
+        public string Scope;
         public bool IsPublic
         {
             get { return Modifier.Equals("public"); }
@@ -20,7 +20,7 @@ namespace SharpToJs.ST
             Category = category;
             Modifier = "private";
             Type = string.Empty;
-            Parent = string.Empty;
+            Scope = string.Empty;
         }
 
         public Symbol(string name, string category, string modifier)
@@ -29,7 +29,7 @@ namespace SharpToJs.ST
             Category = category;
             Modifier = modifier;
             Type = string.Empty;
-            Parent = string.Empty;
+            Scope = string.Empty;
         }
 
         public void SetPublic()
@@ -39,8 +39,8 @@ namespace SharpToJs.ST
 
         public override string ToString()
         {
-            return string.Format("Name: {0}, Category: {1}, Modifier: {2}, Type: {3}, Parent: {4}",
-                Name, Category, Modifier, Type, Parent
+            return string.Format("Name: {0}, Category: {1}, Modifier: {2}, Type: {3}, Scope: {4}",
+                Name, Category, Modifier, Type, Scope
                 );
         }
     }

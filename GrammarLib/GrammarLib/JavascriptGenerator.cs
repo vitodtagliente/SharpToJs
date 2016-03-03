@@ -45,6 +45,12 @@ namespace SharpToJs
                 Errors = "Cannot parse AST";                    
                 return false;
             }
+            AbstractSyntaxTree.Check();
+            if (AbstractSyntaxTree.Status == AbstractSyntaxTreeStatus.Error)
+            {
+                Errors = "Semantic Error";
+                return false;
+            }
 
             return true;
         }

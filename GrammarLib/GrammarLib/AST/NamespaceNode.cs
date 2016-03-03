@@ -9,6 +9,11 @@ namespace SharpToJs.AST
 
         public string Name { get; private set; }
 
+        public override void Check()
+        {
+            AST.Table.PushNamespace(Name);
+        }
+
         public override void SetBehaviour()
         {
             var id = FindChild<QualifiedIdentifierNode>();
@@ -20,8 +25,6 @@ namespace SharpToJs.AST
         public override string ToJs()
         {
             StringBuilder str = new StringBuilder();
-
-            AST.Table.PushNamespace(Name);
 
             string current_namespace = string.Empty;
             var pieces = Name.Split('.');

@@ -38,7 +38,7 @@ namespace SharpToJs.ST
         public void PushClass(string name, string namespace_name)
         {
             var symbol = new Symbol(name, "class");
-            symbol.Parent = namespace_name;
+            symbol.Scope = namespace_name;
             Elements.Add(symbol);
             _classes.Push(symbol);
         }
@@ -74,7 +74,7 @@ namespace SharpToJs.ST
 
             foreach (var symbol in Elements)
             {
-                if (symbol.Parent == name)
+                if (symbol.Scope == name)
                     list.Add(symbol);
             }
 

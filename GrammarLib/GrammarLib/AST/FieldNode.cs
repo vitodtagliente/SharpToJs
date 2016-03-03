@@ -11,16 +11,18 @@ namespace SharpToJs.AST
         {
             modifiers = FindChild<VisibilityModifierNode>();
             id = FindChild<IdentifierToken>();
-
-            Check();
         }
 
         public override void Check()
         {
-            var symbol = new ST.Symbol(id.ToJs(), "attribute");
+            var symbol = new ST.Symbol(id.Value, "attribute");
             if (modifiers.IsPublic)
                 symbol.SetPublic();
-            symbol.Parent = AST.Table.CurrentClass.Name;
+            symbol.Scope = AST.Table.CurrentClass.Name;
+
+            var type = FindChild("qualified-type");
+            symbol.Type = type.ToJs();
+
             AST.Table.Elements.Add(symbol);
         }
 

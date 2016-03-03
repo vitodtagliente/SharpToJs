@@ -70,6 +70,15 @@ namespace SharpToJs.AST
 
         }
 
+        public void SemanticCheck()
+        {
+            Check();
+            foreach(var child in Children)
+            {
+                ((JsNode)child).SemanticCheck();
+            }
+        }
+
         public void Remove()
         {
             if (Parent != null)

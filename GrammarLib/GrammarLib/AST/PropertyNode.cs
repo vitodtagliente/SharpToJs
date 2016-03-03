@@ -16,8 +16,6 @@ namespace SharpToJs.AST
             {
                 Name = id.Value;
             }
-
-            Check();
         }
 
         public override void Check()
@@ -26,7 +24,11 @@ namespace SharpToJs.AST
             var symbol = new ST.Symbol(Name, "property");
             if (modifiers.IsPublic)
                 symbol.SetPublic();
-            symbol.Parent = AST.Table.CurrentClass.Name;
+            symbol.Scope = AST.Table.CurrentClass.Name;
+
+            var type = FindChild("qualified-type");
+            symbol.Type = type.ToJs();
+
             AST.Table.Elements.Add(symbol);
         }
 

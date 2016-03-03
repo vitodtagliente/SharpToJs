@@ -26,12 +26,11 @@ namespace SharpToJs.AST
 
         public AbstractSyntaxTreeStatus Status { get; private set; }
 
-        public ST.SymbolTable Table { get; private set; }
+        static ST.SymbolTable _table = new ST.SymbolTable();
+        public ST.SymbolTable Table { get { return _table; } }
 
         public AbstractSyntaxTree(JsNode root)
         {
-            Table = new ST.SymbolTable();
-
             Status = AbstractSyntaxTreeStatus.Error;
 
             Root = root;            
@@ -49,6 +48,11 @@ namespace SharpToJs.AST
             Status = AbstractSyntaxTreeStatus.Parsed;
             Root.AST = this;
             Root.Parse();
+        }
+
+        public void Check()
+        {
+            Root.SemanticCheck();
         }
 
         public string ToJs()

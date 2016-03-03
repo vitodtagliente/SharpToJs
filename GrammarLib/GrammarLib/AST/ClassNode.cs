@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 
 namespace SharpToJs.AST
 {
@@ -7,12 +6,7 @@ namespace SharpToJs.AST
     {
         public ConstructorNode Constructor { get; private set; }
         public string Name { get; private set; }
-
-        public override void AfterInit()
-        {
-            Check();
-        }
-
+        
         public override void SetBehaviour()
         {
             Constructor = FindChild<ConstructorNode>();
@@ -27,7 +21,7 @@ namespace SharpToJs.AST
 
         public override void Check()
         {
-            AST.Table.PushClass(Name, string.Empty);
+            AST.Table.PushClass(Name, AST.Table.CurrentNamespace.Name);
         }
 
         public override string ToJs()
@@ -65,7 +59,7 @@ namespace SharpToJs.AST
             str.AppendLine("}");
             str.AppendLine(string.Empty);
 
-            // inserisco lestensione
+            // inserisco l'estensione
 
             var class_params = FindChild("class-params");
             if(class_params.IsLeaf == false)
