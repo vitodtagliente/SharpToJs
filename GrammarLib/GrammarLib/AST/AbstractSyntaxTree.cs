@@ -6,6 +6,7 @@ namespace SharpToJs.AST
     {
         Error = 0,
         Parsing,
+        SemanticCheck,
         Parsed
     }
 
@@ -52,6 +53,7 @@ namespace SharpToJs.AST
 
         public void Check()
         {
+            Status = AbstractSyntaxTreeStatus.SemanticCheck;
             Root.SemanticCheck();
         }
 

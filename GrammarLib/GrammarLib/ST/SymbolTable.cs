@@ -4,6 +4,8 @@ namespace SharpToJs.ST
 {  
     public class SymbolTable 
     {
+        public static SymbolTable singleton { get; private set; }
+
         public List<Symbol> Elements { get; private set; }
         
         // access hierarchy
@@ -13,6 +15,9 @@ namespace SharpToJs.ST
         public SymbolTable()
         {
             Elements = new List<Symbol>();
+
+            if (singleton == null)
+                singleton = this;
         }
 
         public void PushNamespace(string name)

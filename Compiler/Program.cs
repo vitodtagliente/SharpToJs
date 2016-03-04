@@ -45,6 +45,7 @@ namespace Compiler
 
             bool thereIsError = false;
 
+            // Compila in sequenza tutti i file di input
             foreach (var filename in Files)
             {
                 Console.WriteLine("Compiling file: " + filename);
@@ -78,7 +79,8 @@ namespace Compiler
                 wr.Close();
                 wr.Dispose();
             }
-
+            
+            // Nel caso di presenza del flag "-d" genera e mostra in output anche il file index.html
             if (argManager.Contains("-d") == true && thereIsError == false)
             {
                 StringBuilder str = new StringBuilder();

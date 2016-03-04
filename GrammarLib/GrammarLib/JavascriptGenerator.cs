@@ -6,10 +6,11 @@ namespace SharpToJs
 {
     public class JavascriptGenerator
     {
-        public Grammar Grammar { get; private set; }
-        public LanguageData Language { get; private set; }
-        public Parser Parser { get; private set; }
+        public Grammar Grammar { get; private set; } // Grammatica del linguaggio
+        public LanguageData Language { get; private set; } 
+        public Parser Parser { get; private set; } 
 
+        // Gestione degli Errori
         StringBuilder strErrors = new StringBuilder();
         public string Errors
         {
@@ -28,6 +29,7 @@ namespace SharpToJs
 
         public bool Parse(string source)
         {
+            // Genera il ParseTree del file di input
             var parse_tree = Parser.Parse(source);
             if(parse_tree.Status == ParseTreeStatus.Error)
             {
@@ -36,8 +38,7 @@ namespace SharpToJs
                 return false;
             }
 
-            // create AST
-
+            // Mappa l'AST
             AbstractSyntaxTree = new AbstractSyntaxTree((JsNode)NodeFactory.Map(parse_tree.Root));
             AbstractSyntaxTree.Parse();
             if (AbstractSyntaxTree.Status == AbstractSyntaxTreeStatus.Error)
@@ -45,6 +46,8 @@ namespace SharpToJs
                 Errors = "Cannot parse AST";                    
                 return false;
             }
+
+            // Esegui il Controllo Semantico
             AbstractSyntaxTree.Check();
             if (AbstractSyntaxTree.Status == AbstractSyntaxTreeStatus.Error)
             {
@@ -55,6 +58,7 @@ namespace SharpToJs
             return true;
         }
 
+        // Traduci L'AST generato nel corrispondente codice Javascript
         public string Compile()
         {
             if (AbstractSyntaxTree.Status != AbstractSyntaxTreeStatus.Error)

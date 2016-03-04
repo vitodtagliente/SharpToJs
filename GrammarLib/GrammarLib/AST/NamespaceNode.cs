@@ -8,18 +8,18 @@ namespace SharpToJs.AST
         static List<string> Namespaces = new List<string>();
 
         public string Name { get; private set; }
-
-        public override void Check()
-        {
-            AST.Table.PushNamespace(Name);
-        }
-
+               
         public override void SetBehaviour()
         {
             var id = FindChild<QualifiedIdentifierNode>();
             Name = id.Value;
 
             Children.Remove(id);
+        }
+
+        public override void Check()
+        {
+            AST.Table.PushNamespace(Name);
         }
 
         public override string ToJs()

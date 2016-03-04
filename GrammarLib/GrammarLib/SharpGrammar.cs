@@ -540,10 +540,14 @@ namespace SharpToJs
             this.RegisterOperators(30, "=", "<=", ">=", "<", ">", "<>");
             this.RegisterOperators(20, "&&", "||");
 
+            // Definisco quali nodi rimuovere nella costruzione del Parse Tree
+
             //MarkTransient(unary_operator, binary_operator, incr_dec_operator, assignment_operator);
 
             MarkTransient(using_directives_lines);
             MarkTransient(namespace_declarations);
+
+            // Configurazione di Irony per la costruzione automatizzata dell' AST
 
             //this.LanguageFlags = LanguageFlags.CreateAst | LanguageFlags.NewLineBeforeEOF;
 
