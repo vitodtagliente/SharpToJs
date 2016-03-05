@@ -3,8 +3,8 @@ D:\Documents\Poliba\Magistrale\Compilatori\Progetto\SharpToJS\Compiler\bin\Debug
 D:\Documents\Poliba\Magistrale\Compilatori\Progetto\SharpToJS\Compiler\bin\Debug\Compiler.pdb
 D:\Documents\Poliba\Magistrale\Compilatori\Progetto\SharpToJS\Compiler\bin\Debug\Irony.dll
 D:\Documents\Poliba\Magistrale\Compilatori\Progetto\SharpToJS\Compiler\bin\Debug\Irony.Interpreter.dll
+D:\Documents\Poliba\Magistrale\Compilatori\Progetto\SharpToJS\Compiler\bin\Debug\SharpToJs.dll
+D:\Documents\Poliba\Magistrale\Compilatori\Progetto\SharpToJS\Compiler\bin\Debug\SharpToJs.pdb
 D:\Documents\Poliba\Magistrale\Compilatori\Progetto\SharpToJS\Compiler\obj\Debug\Compiler.csprojResolveAssemblyReference.cache
 D:\Documents\Poliba\Magistrale\Compilatori\Progetto\SharpToJS\Compiler\obj\Debug\Compiler.exe
 D:\Documents\Poliba\Magistrale\Compilatori\Progetto\SharpToJS\Compiler\obj\Debug\Compiler.pdb
-D:\Documents\Poliba\Magistrale\Compilatori\Progetto\SharpToJS\Compiler\bin\Debug\SharpToJs.dll
-D:\Documents\Poliba\Magistrale\Compilatori\Progetto\SharpToJS\Compiler\bin\Debug\SharpToJs.pdb

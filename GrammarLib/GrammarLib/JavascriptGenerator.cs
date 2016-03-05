@@ -34,7 +34,12 @@ namespace SharpToJs
             if(parse_tree.Status == ParseTreeStatus.Error)
             {
                 foreach (var message in parse_tree.ParserMessages)
+                {
                     Errors = message.ToString();
+                    Errors = "Syntax Error on " + string.Format("Line: \"{0}\", Column: \"{1}\", Position: \"{2}\" ",
+                            message.Location.Line, message.Location.Column, message.Location.Position
+                        );
+                }
                 return false;
             }
 

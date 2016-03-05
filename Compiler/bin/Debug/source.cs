@@ -14,7 +14,6 @@ namespace CanvasEngine.Graphics
         public string name;
     }
 
-
     public class GraphicDevice
     {
         public JsNative canvas = null;
@@ -80,14 +79,9 @@ namespace CanvasEngine.Graphics
             {
                 if(color != null)
                     lastClearColor = color;
-				else color = "ciao";
                 context.fillStyle = lastClearColor;
                 context.fillRect(0, 0, Width, Height);
             }
-			else 
-			{
-				deviceReady = false;
-			}
         }
     }
 }

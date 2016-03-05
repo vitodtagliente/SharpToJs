@@ -69,14 +69,8 @@ CanvasEngine.Graphics.GraphicDevice = function(canvas_id){
 		{
 			if ( color != null )
 				lastClearColor = color;
-			else
-				color = "ciao";
 			this.context.fillStyle = lastClearColor;
 			this.context.fillRect( 0, 0, this.Width, this.Height );
-		}
-		else
-		{
-			deviceReady = false;
 		}
 
 	}
