@@ -26,15 +26,12 @@ namespace SharpToJs.AST
                 str.Append(for_iterator.ToJs());
 
             str.Append(")");
-
-            Shift();
-
+            
             str.AppendLine(string.Empty);
-            str.Append(Tab);
             str.Append(FindChild("embedded-statement").ToJs());
-            str.Append(";");
 
-            Unshift();
+            if (FindChild<BlockNode>() == null)
+                str.Append(";");
 
             return str.ToString();
         }

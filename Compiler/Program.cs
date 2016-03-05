@@ -12,8 +12,8 @@ namespace Compiler
         {
             Console.Title = "SharpToJs Compiler";
 
-            var argManager = new ArgManager(new string[] { "source.cs", "-d" });
-            //var argManager = new ArgManager(args);
+            //var argManager = new ArgManager(new string[] { "source.cs", "-d" });
+            var argManager = new ArgManager(args);
 
             List<string> Files = new List<string>();
             List<string> Scripts = new List<string>();

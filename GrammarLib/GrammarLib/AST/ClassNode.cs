@@ -34,7 +34,8 @@ namespace SharpToJs.AST
             str.Append(Name);
             str.Append(" = function(");
 
-            str.Append(Constructor.Parameters.ToJs());
+            if(Constructor != null)
+                str.Append(Constructor.Parameters.ToJs());
 
             str.Append(")");
             str.AppendLine("{");
@@ -48,11 +49,14 @@ namespace SharpToJs.AST
 
             // inserisco le operazioni del costruttore
             str.AppendLine(string.Empty);
-            str.Append(Tab);
-            str.AppendLine("// Constructor");
-            str.AppendLine(string.Empty);
-            str.AppendLine(Constructor.ToJs());
-            str.AppendLine(string.Empty);
+            if(Constructor != null)
+            {
+                str.Append(Tab);
+                str.AppendLine("// Constructor");
+                str.AppendLine(string.Empty);
+                str.AppendLine(Constructor.ToJs());
+                str.AppendLine(string.Empty);
+            }
 
             Unshift();
 
