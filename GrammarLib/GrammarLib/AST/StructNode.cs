@@ -21,37 +21,19 @@ namespace SharpToJs.AST
             str.Append(AST.Table.CurrentNamespace.Name);
             str.Append(".");
             str.Append(id.Value);
-            str.Append(" = {");
+            str.Append(" = function(){");
+            str.AppendLine(string.Empty);
 
             Shift();
 
             if (elements != null)
             {
-                string comma = string.Empty;
-                foreach(var element in elements.FindChildren<FieldNode>())
-                {
-                    str.Append(comma);
-                    str.AppendLine(string.Empty);
-                    str.Append(Tab);
-
-                    var i = element.FindChild<IdentifierToken>(false);
-                    str.Append(i.Value);
-                    var e = element.FindChild<ElementNode>();
-                    if (e != null)
-                    {
-                        str.Append(": ");
-                        str.Append(e.ToJs());
-                    }
-                    else str.Append(": null");
-
-                    comma = ", ";
-                }                
+                str.Append(elements.ToJs());         
             }
 
             Unshift();
-
-            str.AppendLine(string.Empty);
-            str.Append("};");
+            
+            str.Append("}");
             str.AppendLine(string.Empty);
 
             return str.ToString();

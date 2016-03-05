@@ -18,7 +18,7 @@ namespace SharpToJs.AST
             var stmt = FindChild("embedded-statement");
             str.AppendLine(string.Empty);
 
-            var block = stmt.FindChild<BlockNode>();
+            var block = stmt.FindChild<BlockNode>(false);
             if (block == null)
             {
                 Shift();
@@ -33,7 +33,7 @@ namespace SharpToJs.AST
                 str.Append(";");
             }
 
-            var else_stmt = FindChild<ElseStmtNode>();
+            var else_stmt = FindChild<ElseStmtNode>(false);
             if (else_stmt != null && else_stmt.IsLeaf == false)
             {
                 str.Append(else_stmt.ToJs());

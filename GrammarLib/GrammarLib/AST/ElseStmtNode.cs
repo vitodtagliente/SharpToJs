@@ -7,17 +7,27 @@ namespace SharpToJs.AST
         public override string ToJs()
         {
             StringBuilder str = new StringBuilder();
-            str.AppendLine(string.Empty);
+
+            var block = FindChild<BlockNode>();
+
+            if(block == null)
+                str.AppendLine(string.Empty);
             str.Append(Tab);
             str.Append("else");
             str.AppendLine(string.Empty);
+            
+            if (block == null)
+            {
+                Shift();
+                str.Append(Tab);
+            }
 
-            Shift();
-
-            str.Append(Tab);
             str.Append(base.ToJs());
 
-            Unshift();
+            if(block == null)
+            {
+                Unshift();
+            }
 
             var stmt = FindChild("embedded-statement");
             if(stmt != null)

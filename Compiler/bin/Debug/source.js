@@ -13,10 +13,10 @@ CanvasEngine.Graphics.Foo = {
 	'Third': 'third'
 };
 
-CanvasEngine.Graphics.Foo1 = {
-	number: 8, 
-	name: null
-};
+CanvasEngine.Graphics.Foo1 = function(){
+	this.number = 8;
+	this.name;
+}
 
 CanvasEngine.Graphics.GraphicDevice = function(canvas_id){
 
@@ -69,13 +69,15 @@ CanvasEngine.Graphics.GraphicDevice = function(canvas_id){
 		{
 			if ( color != null )
 				lastClearColor = color;
+			else
+				color = "ciao";
 			this.context.fillStyle = lastClearColor;
 			this.context.fillRect( 0, 0, this.Width, this.Height );
 		}
-
 		else
-						{
-			}
+		{
+			deviceReady = false;
+		}
 
 	}
 
