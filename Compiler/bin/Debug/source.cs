@@ -3,6 +3,18 @@ using SharpToJs;
 
 namespace CanvasEngine.Graphics
 {   
+	public enum Foo
+    {
+        First, Second, Third
+    }
+	
+	public struct Foo1
+    {
+        public int number = 8;
+        public string name;
+    }
+
+
     public class GraphicDevice
     {
         public JsNative canvas = null;
@@ -47,13 +59,11 @@ namespace CanvasEngine.Graphics
             {
                 context = canvas.getContext("2d");
                 fullscreen = false;
-            }
+            } 
             
             if(context != null)
                 deviceReady = true;
             else console.log( "Unable to initializate context 2d" );
-            
-            var bindThis = this;
         }
         
         public void OnResize(){}
@@ -63,18 +73,7 @@ namespace CanvasEngine.Graphics
             canvas.width = width;
             canvas.height = height;
         }
-        
-        public void Test()
-        {
-            if(true)
-            {
-                if(true)
-                    if(8 > 9)
-                        echo(true);
-            }
-            else canvas.check();
-        }
-        
+		                
         public void Clear(string color)
         {
             if(deviceReady)
@@ -84,6 +83,10 @@ namespace CanvasEngine.Graphics
                 context.fillStyle = lastClearColor;
                 context.fillRect(0, 0, Width, Height);
             }
+			else 
+			{
+				
+			}
         }
     }
 }

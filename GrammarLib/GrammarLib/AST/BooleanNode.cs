@@ -5,7 +5,7 @@ namespace SharpToJs.AST
     {
         public string Value { get; private set; }
 
-        public override void SetBehaviour()
+        public override void BeforeBehaviour()
         {
             Value = string.Empty;
             if (Context.ChildNodes.Count > 0)

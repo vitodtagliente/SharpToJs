@@ -8,14 +8,14 @@ namespace SharpToJs.AST
         IdentifierToken id;
         ParametersNode parameters;
 
-        public override void SetBehaviour()
+        public override void BeforeBehaviour()
         {
             modifiers = FindChild<VisibilityModifierNode>();
             id = FindChild<IdentifierToken>();
             parameters = FindChild<ParametersNode>();
         }
 
-        public override void Check()
+        public override void AfterBehaviour()
         {
             var symbol = new ST.Symbol(id.ToJs(), "method");
             if (modifiers.IsPublic)
@@ -24,9 +24,24 @@ namespace SharpToJs.AST
 
             var type = FindChild("qualified-type");
             symbol.Type = type.ToJs();
+            if (string.IsNullOrEmpty(symbol.Type))
+                symbol.Type = "void";
 
-            // Add parameters to symbol table
-            if(parameters != null)
+            AST.Table.Elements.Add(symbol);
+
+            // Controlla se nel corpo del metodo è presente il return statement 
+            if (symbol.Type != "void")
+            {
+                var return_stmt = FindChild<ReturnStmtNode>();
+                if (return_stmt == null)
+                {
+                    AST.Errors = "Cannot find return statement on " + ToPosition();
+                    AST.Errors = "Semantic Error on Symbol: " + symbol.ToString();
+                }
+            }
+
+            // Aggiungi tutti i parametri del metodo alla Symbol Table
+            if (parameters != null)
             {
                 foreach(JsNode parameter in parameters.Children)
                 {
@@ -40,8 +55,6 @@ namespace SharpToJs.AST
                     AST.Table.Elements.Add(p);
                 }
             }
-
-            AST.Table.Elements.Add(symbol);
         }
 
         public override string ToJs()

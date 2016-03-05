@@ -50,9 +50,9 @@ namespace SharpToJs
             NonTerminal type_declaration = new NonTerminal("type-declaration", typeof(AST.JsNode));
 
             NonTerminal class_declaration = new NonTerminal("class-declaration", typeof(AST.ClassNode));
-            NonTerminal struct_declaration = new NonTerminal("struct-declaration");
+            NonTerminal struct_declaration = new NonTerminal("struct-declaration", typeof(AST.StructNode));
             NonTerminal interface_declaration = new NonTerminal("interface-declaration");
-            NonTerminal enum_declaration = new NonTerminal("enum-declaration");
+            NonTerminal enum_declaration = new NonTerminal("enum-declaration", typeof(AST.EnumNode));
 
             NonTerminal class_body = new NonTerminal("class-body", typeof(AST.ClassBodyNode));
 
@@ -62,10 +62,10 @@ namespace SharpToJs
             NonTerminal class_params = new NonTerminal("class-params", typeof(AST.JsNode));
             NonTerminal class_param = new NonTerminal("class-param", typeof(AST.JsNode));
 
-            NonTerminal enum_elements = new NonTerminal("enum-elements");
-            NonTerminal enum_element = new NonTerminal("enum-element");
+            NonTerminal enum_elements = new NonTerminal("enum-elements", typeof(AST.JsNode));
+            NonTerminal enum_element = new NonTerminal("enum-element", typeof(AST.JsNode));
 
-            NonTerminal struct_elements = new NonTerminal("struct-elements");
+            NonTerminal struct_elements = new NonTerminal("struct-elements", typeof(AST.JsNode));
 
             NonTerminal member_declarations = new NonTerminal("member-declarations", typeof(AST.JsNode));
             NonTerminal member_declaration = new NonTerminal("member-declaration", typeof(AST.JsNode));
@@ -128,7 +128,7 @@ namespace SharpToJs
             NonTerminal conditional_expression = new NonTerminal("conditional-expression");
             NonTerminal bin_op_expression = new NonTerminal("bin-op-expression", typeof(AST.JsNode));
             NonTerminal typecast_expression = new NonTerminal("typecast-expression", typeof(AST.TypecastNode));
-            NonTerminal primary_expression = new NonTerminal("primary-expression", typeof(AST.JsNode));
+            NonTerminal primary_expression = new NonTerminal("primary-expression", typeof(AST.PrimaryExpressionNode));
 
             NonTerminal object_creation_expression = new NonTerminal("object-creation-expression", typeof(AST.ObjectCreationNode));
             NonTerminal pre_incr_decr_expression = new NonTerminal("pre-incr-decr-expression", typeof(AST.IncrDecrNode));

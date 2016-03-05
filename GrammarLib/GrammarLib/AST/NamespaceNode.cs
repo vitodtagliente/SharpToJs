@@ -9,7 +9,7 @@ namespace SharpToJs.AST
 
         public string Name { get; private set; }
                
-        public override void SetBehaviour()
+        public override void BeforeBehaviour()
         {
             var id = FindChild<QualifiedIdentifierNode>();
             Name = id.Value;
@@ -17,7 +17,7 @@ namespace SharpToJs.AST
             Children.Remove(id);
         }
 
-        public override void Check()
+        public override void AfterBehaviour()
         {
             AST.Table.PushNamespace(Name);
         }

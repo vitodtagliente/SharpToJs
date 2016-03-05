@@ -5,7 +5,7 @@ namespace SharpToJs.AST
     {
         public string Value { get; private set; }
 
-        public override void SetBehaviour()
+        public override void BeforeBehaviour()
         {
             string comma = string.Empty;
             for (int i = 0; i < Context.ChildNodes.Count; i++)

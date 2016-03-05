@@ -7,6 +7,17 @@
 var CanvasEngine = CanvasEngine || {};
 CanvasEngine.Graphics = CanvasEngine.Graphics || {};
 
+CanvasEngine.Graphics.Foo = {
+	'First': 'first', 
+	'Second': 'second', 
+	'Third': 'third'
+};
+
+CanvasEngine.Graphics.Foo1 = {
+	number: 8, 
+	name: null
+};
+
 CanvasEngine.Graphics.GraphicDevice = function(canvas_id){
 
 	this.canvas = null;
@@ -52,19 +63,6 @@ CanvasEngine.Graphics.GraphicDevice = function(canvas_id){
 		this.canvas.height = height;
 	}
 
-	this.Test = function()
-	{
-		if ( true )
-		{
-			if ( true )
-				if ( 8 > 9 )
-					echo( true );;
-		}
-
-		else
-			this.canvas.check(  );
-	}
-
 	this.Clear = function(color)
 	{
 		if ( deviceReady )
@@ -74,6 +72,10 @@ CanvasEngine.Graphics.GraphicDevice = function(canvas_id){
 			this.context.fillStyle = lastClearColor;
 			this.context.fillRect( 0, 0, this.Width, this.Height );
 		}
+
+		else
+						{
+			}
 
 	}
 
@@ -90,7 +92,6 @@ CanvasEngine.Graphics.GraphicDevice = function(canvas_id){
 		deviceReady = true;
 	else
 		console.log( "Unable to initializate context 2d" );
-	var bindThis = this;
 
 
 }

@@ -1,12 +1,14 @@
-﻿using System.Text;
-
+﻿
 namespace SharpToJs.AST
 {
     public class ObjectNode : JsNode
     {
-        public override string ToJs()
+        public string Type { get; private set; }
+
+        public override void AfterBehaviour()
         {
-            return base.ToJs();
+            Type = string.Empty;
+
         }
     }
 }

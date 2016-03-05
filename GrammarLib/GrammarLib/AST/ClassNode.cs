@@ -7,7 +7,7 @@ namespace SharpToJs.AST
         public ConstructorNode Constructor { get; private set; }
         public string Name { get; private set; }
         
-        public override void SetBehaviour()
+        public override void BeforeBehaviour()
         {
             Constructor = FindChild<ConstructorNode>();
             if(Constructor != null)
@@ -19,7 +19,7 @@ namespace SharpToJs.AST
                 Name = identifier.Value;
         }
 
-        public override void Check()
+        public override void AfterBehaviour()
         {
             AST.Table.PushClass(Name, AST.Table.CurrentNamespace.Name);
         }

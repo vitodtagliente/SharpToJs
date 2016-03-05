@@ -7,21 +7,32 @@ namespace SharpToJs.AST
         VisibilityModifierNode modifiers;
         IdentifierToken id;
 
-        public override void SetBehaviour()
+        public override void BeforeBehaviour()
         {
             modifiers = FindChild<VisibilityModifierNode>();
             id = FindChild<IdentifierToken>();
         }
 
-        public override void Check()
+        public override void AfterBehaviour()
         {
             var symbol = new ST.Symbol(id.Value, "attribute");
             if (modifiers.IsPublic)
                 symbol.SetPublic();
-            symbol.Scope = AST.Table.CurrentClass.Name;
+            if (AST.Table.CurrentClass != null)
+                symbol.Scope = AST.Table.CurrentClass.Name;
 
             var type = FindChild("qualified-type");
             symbol.Type = type.ToJs();
+            if (string.IsNullOrEmpty(symbol.Type))
+                symbol.Type = "void";
+
+            var p_expr = FindChild<PrimaryExpressionNode>(false);
+            if(p_expr != null && symbol.Type != p_expr.Type && p_expr.Type != "null" && string.IsNullOrEmpty(p_expr.Type) == false)
+            {
+                AST.Errors = "Type Check Error";
+                AST.Errors = "Semantic Error on " + ToPosition();
+                AST.Errors = symbol.Name + " cannot be " + p_expr.Type;
+            }
 
             AST.Table.Elements.Add(symbol);
         }

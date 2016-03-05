@@ -8,7 +8,7 @@ namespace SharpToJs.AST
         IdentifierToken id;
         VisibilityModifierNode modifiers;
 
-        public override void SetBehaviour()
+        public override void BeforeBehaviour()
         {            
             id = FindChild<IdentifierToken>();
             Name = string.Empty;
@@ -18,7 +18,7 @@ namespace SharpToJs.AST
             }
         }
 
-        public override void Check()
+        public override void AfterBehaviour()
         {
             modifiers = FindChild<VisibilityModifierNode>();
             var symbol = new ST.Symbol(Name, "property");
@@ -28,6 +28,8 @@ namespace SharpToJs.AST
 
             var type = FindChild("qualified-type");
             symbol.Type = type.ToJs();
+            if (string.IsNullOrEmpty(symbol.Type))
+                symbol.Type = "void";
 
             AST.Table.Elements.Add(symbol);
         }

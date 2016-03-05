@@ -6,7 +6,7 @@ namespace SharpToJs.AST
     {
         public ParametersNode Parameters { get; private set; }
 
-        public override void SetBehaviour()
+        public override void BeforeBehaviour()
         {
             Parameters = FindChild<ParametersNode>();
         }

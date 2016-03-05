@@ -8,7 +8,7 @@ namespace SharpToJs.AST
     {
         List<string> Parameters = new List<string>();
 
-        public override void SetBehaviour()
+        public override void BeforeBehaviour()
         {
             var param = FindChildren<IdentifierToken>();
             foreach (var p in param)

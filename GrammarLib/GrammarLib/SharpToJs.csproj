@@ -58,6 +58,7 @@
     <Compile Include="AST\DoNode.cs" />
     <Compile Include="AST\ElementNode.cs" />
     <Compile Include="AST\ElseStmtNode.cs" />
+    <Compile Include="AST\EnumNode.cs" />
     <Compile Include="AST\FieldNode.cs" />
     <Compile Include="AST\ForeachNode.cs" />
     <Compile Include="AST\ForNode.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="AST\ObjectNode.cs" />
     <Compile Include="AST\OperatorNode.cs" />
     <Compile Include="AST\ParametersNode.cs" />
+    <Compile Include="AST\PrimaryExpressionNode.cs" />
     <Compile Include="AST\PropertyNode.cs" />
     <Compile Include="AST\QualifiedIdentifierNode.cs" />
     <Compile Include="AST\JsNode.cs" />
@@ -85,6 +87,7 @@
     <Compile Include="AST\SetNode.cs" />
     <Compile Include="AST\StatementNode.cs" />
     <Compile Include="AST\StringNode.cs" />
+    <Compile Include="AST\StructNode.cs" />
     <Compile Include="ST\Symbol.cs" />
     <Compile Include="ST\SymbolStack.cs" />
     <Compile Include="ST\SymbolTable.cs" />

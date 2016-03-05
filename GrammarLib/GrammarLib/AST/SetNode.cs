@@ -4,7 +4,7 @@ namespace SharpToJs.AST
 {
     public class SetNode : JsNode
     {
-        public override void SetBehaviour()
+        public override void BeforeBehaviour()
         {
             var modifiers = FindChild<VisibilityModifierNode>();
             if (modifiers != null)

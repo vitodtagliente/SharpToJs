@@ -5,7 +5,7 @@ namespace SharpToJs.AST
     {
         public string Value { get; private set; }
 
-        public override void SetBehaviour()
+        public override void BeforeBehaviour()
         {
             Value = Context.Token.Text;
         }

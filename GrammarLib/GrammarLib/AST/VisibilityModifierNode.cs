@@ -9,7 +9,7 @@ namespace SharpToJs.AST
             get { return is_public; }
         }
 
-        public override void SetBehaviour()
+        public override void BeforeBehaviour()
         {
             Value = string.Empty;
             var value = string.Empty;

@@ -46,7 +46,7 @@ namespace SharpToJs.AST
         public void Parse()
         {
             SetChildren(Context.ChildNodes);
-            SetBehaviour();
+            BeforeBehaviour();
         }
 
         public virtual void SetChildren(ParseTreeNodeList children)
@@ -65,14 +65,14 @@ namespace SharpToJs.AST
             }
         }
 
-        public virtual void Check()
+        public virtual void AfterBehaviour()
         {
 
         }
 
         public void SemanticCheck()
         {
-            Check();
+            AfterBehaviour();
             foreach(var child in Children)
             {
                 ((JsNode)child).SemanticCheck();
@@ -96,7 +96,7 @@ namespace SharpToJs.AST
                 tab.Remove(tab.Length - ("\t").Length, ("\t").Length);
         }
         
-        public virtual void SetBehaviour()
+        public virtual void BeforeBehaviour()
         {
 
         }
