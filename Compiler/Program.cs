@@ -55,6 +55,7 @@ namespace Compiler
                 if (compiler.Parse(source) == false)
                 {
                     Console.WriteLine(compiler.Errors);
+                    Console.WriteLine(compiler.AbstractSyntaxTree.Errors);
                     thereIsError = true;
                     break;
                 }

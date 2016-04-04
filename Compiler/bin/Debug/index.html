@@ -7,16 +7,10 @@
 <body>
 <script>
 
-	var a = 1;
-	var b = 2;
-	var sum = a + b;
-	console.log( sum );
-	if ( sum > 4 )
-		console.log( "more than 4" );
-	else
-		console.log( "less than 4" );
-	var obj = new Math.Sample(  );
-	obj.Foo(  );
+	document.body.innerHTML += "<canvas id='game_canvas'></canvas>";
+	var device = new CanvasEngine.Graphics.GraphicDevice( "game_canvas" );
+	device.Fullscreen = true;
+	device.Clear( "cyan" );
 
 </script>
 </body>

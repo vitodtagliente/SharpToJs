@@ -34,7 +34,7 @@ namespace SharpToJs.AST
             str.Append(Name);
             str.Append(" = function(");
 
-            if(Constructor != null)
+            if(Constructor != null && Constructor.Parameters != null)
                 str.Append(Constructor.Parameters.ToJs());
 
             str.Append(")");

@@ -31,7 +31,6 @@ namespace SharpToJs
 
             NonTerminal program = new NonTerminal("program", typeof(AST.ProgramNode));
 
-
             NonTerminal using_directives_lines = new NonTerminal("using-directives-lines");
             NonTerminal using_directives = new NonTerminal("using-directives");
             NonTerminal using_directive = new NonTerminal("using-directive");
@@ -348,7 +347,7 @@ namespace SharpToJs
                 ;
 
             control_flow_statement.Rule = if_statement
-                | switch_statement
+                //| switch_statement
                 | for_statement
                 | foreach_statement
                 | do_statement
