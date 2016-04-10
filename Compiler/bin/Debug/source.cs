@@ -15,11 +15,14 @@ namespace CanvasEngine.Graphics
 			device.Fullscreen = true;
 			device.Clear("cyan");
         }
+		
+		//static void Main(string args[]){ } // 2 mains
 				        
         bool fullscreen = false;
         public bool Fullscreen
         {   
-            get { return fullscreen; } // miss return
+            // get { fullscreen; } // miss return
+			get { return fullscreen; }
             set { 
                 fullscreen = value; 
                 if(fullscreen)
@@ -37,7 +40,8 @@ namespace CanvasEngine.Graphics
             get { return canvas.height; }
         }
         
-        bool deviceReady = false;
+        //bool deviceReady = 56; // typecheck
+		bool deviceReady = false;
         string lastClearColor = "#000";
     
         public GraphicDevice(string canvas_id)

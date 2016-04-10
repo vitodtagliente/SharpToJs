@@ -20,7 +20,7 @@ CanvasEngine.Graphics.GraphicDevice = function(canvas_id){
 		}
 ,		set: function( value )
 		{
-			fullscreen = ;
+			fullscreen = value;
 			if ( fullscreen )
 				this.Resize( window.innerWidth, window.innerHeight );
 		}

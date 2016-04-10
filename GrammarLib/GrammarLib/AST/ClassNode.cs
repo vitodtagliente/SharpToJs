@@ -10,7 +10,7 @@ namespace SharpToJs.AST
         public override void BeforeBehaviour()
         {
             Constructor = FindChild<ConstructorNode>();
-            if(Constructor != null)
+            if(Constructor != null && Constructor.Parent != null)
             {
                 Constructor.Parent.Children.Remove(Constructor);
             }
@@ -66,7 +66,7 @@ namespace SharpToJs.AST
             // inserisco l'estensione
 
             var class_params = FindChild("class-params");
-            if(class_params.IsLeaf == false)
+            if(class_params != null && class_params.IsLeaf == false)
             {
                 var param = class_params.FindChild("class-param");
 

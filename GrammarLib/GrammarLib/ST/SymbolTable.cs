@@ -61,6 +61,16 @@ namespace SharpToJs.ST
             _classes.Pop();
         }
 
+        public Symbol Find(string name)
+        {
+            foreach (var elem in Elements)
+            {
+                if (elem.Name == name)
+                    return (elem);
+            }
+            return null;
+        }
+
         public Symbol Find(string name, string category)
         {
             foreach (var elem in Elements)
